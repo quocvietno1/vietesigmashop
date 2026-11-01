@@ -6,146 +6,84 @@
 <title>Viet Esigma Shop</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap">
 <style>
-:root{--bg:#EEF2F7;--sf:#fff;--ink:#142033;--mu:#5B6B82;--ln:#D5DDE8;--ac:#2457D6;--acb:#fff;--ok:#1E8E5A;--er:#B42318;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#F1F4F9;--sf:#fff;--ink:#142033;--mu:#5B6B82;--ln:#DDE4EE;--ac:#2457D6;--acb:#fff;--ok:#1E8E5A;--er:#B42318;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root{--bg:#0F1724;--sf:#182234;--ink:#E8EEF7;--mu:#98A6BC;--ln:#2A3750;--ac:#6E94FF;--acb:#0F1724;--ok:#4FD08F;--er:#FF8A7A;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.45 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--sf);z-index:10}
-.wrap{max-width:640px;margin:0 auto}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sf);border-bottom:1px solid var(--ln);padding:14px 16px 0}
-.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-h1{margin:0;font-size:1.45rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
-.tag{margin:4px 0 0;color:var(--mu);font-size:.8rem}
-.bal{text-align:right;min-width:0}
-.bal small{display:block;color:var(--mu);font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px;margin-left:auto}
-.bal b{font-size:1.25rem;font-weight:800;color:var(--ok);white-space:nowrap}
+.wrap{max-width:680px;margin:0 auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sf);border-bottom:1px solid var(--ln);padding:10px 14px 0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+h1{margin:0;font-size:1.2rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+h1 small{display:block;font-size:.7rem;font-weight:400;color:var(--mu);letter-spacing:0}
 .acc{position:relative;flex-shrink:0}
-.accbtn{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;background:none;border:1px solid var(--ln);border-radius:22px;color:var(--ink);font:700 .85rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;max-width:200px;white-space:nowrap}
+.accbtn{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;background:none;border:1px solid var(--ln);border-radius:22px;color:var(--ink);font:700 .85rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;max-width:190px;white-space:nowrap}
 .accbtn b{color:var(--ok)}
 .accmenu{position:absolute;right:0;top:calc(100% + 6px);min-width:220px;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:30}
 .accmenu[hidden]{display:none}
-.accmenu .mi{display:block;width:100%;text-align:left;background:none;border:0;border-radius:8px;min-height:44px;padding:0 12px;color:var(--ink);font:500 .95rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
-.accmenu .mi:hover{background:var(--bg)}
-.accmenu .mi.out{color:var(--er)}
-.accmenu .mt{padding:8px 12px;color:var(--mu);font-size:.8rem;word-break:break-all}
-.accmenu .mt b{display:block;color:var(--ok);font-size:1.05rem}
-nav{display:flex;margin-top:12px;overflow-x:auto}
-nav button{flex:1;background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);font:500 .9rem "Be Vietnam Pro",system-ui,sans-serif;padding:10px 6px;min-height:44px;cursor:pointer;white-space:nowrap}
+.mi{display:block;width:100%;text-align:left;background:none;border:0;border-radius:8px;min-height:44px;padding:0 12px;color:var(--ink);font:500 .95rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.mi:hover{background:var(--bg)}.mi.out{color:var(--er)}
+.mt{padding:8px 12px;color:var(--mu);font-size:.8rem;word-break:break-all}
+.mt b{display:block;color:var(--ok);font-size:1.05rem}
+nav{display:flex;margin-top:4px;overflow-x:auto}
+nav button{flex:1;background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);font:500 .88rem "Be Vietnam Pro",system-ui,sans-serif;padding:8px 6px;min-height:44px;cursor:pointer;white-space:nowrap}
 nav button[aria-selected="true"]{color:var(--ink);border-color:var(--ac);font-weight:700}
-main{padding:16px}
-h2{font-size:1.05rem;margin:22px 0 8px}
-h2:first-child{margin-top:0}
+main{padding:14px;min-height:60vh}
+h2{font-size:1rem;margin:20px 0 8px}h2:first-child{margin-top:0}
 ul{list-style:none;margin:0;padding:0}
-
-/* CSS CHO CARD SẢN PHẨM PHONG CÁCH MỚI */
-.category-block {
-  margin-bottom: 24px;
-  background: var(--sf);
-  border: 1px solid var(--ln);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.category-header {
-  background: #1e1e1e;
-  color: #fff;
-  padding: 12px 16px;
-  font-weight: 700;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-transform: uppercase;
-}
-.product-card {
-  padding: 16px;
-  border-bottom: 1px solid var(--ln);
-}
-.product-card:last-child {
-  border-bottom: none;
-}
-.product-title {
-  margin: 0 0 6px 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #1a56db;
-}
-.product-desc {
-  margin: 0 0 14px 0;
-  color: var(--mu);
-  font-size: 0.88rem;
-}
-.product-badges {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 1px solid var(--ln);
-  background: var(--bg);
-}
-.badge-price {
-  border-color: #f04438;
-  color: #d92d20;
-  background: #fef3f2;
-}
-.btn-buy-full {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: #2563eb;
-  color: #fff;
-  border: 0;
-  border-radius: 10px;
-  min-height: 44px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.btn-buy-full:disabled {
-  background: #94a3b8 !important;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.row{display:flex;justify-content:space-between;gap:14px;padding:16px 0;border-bottom:1px solid var(--ln)}
-.row h3{margin:0;font-size:1rem}
-.row p{margin:2px 0 6px;color:var(--mu);font-size:.88rem}
-.st{font-size:.8rem;color:var(--ok);font-weight:500}.st.out{color:var(--er)}
-.buy{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
-button{font-family:inherit}
-.btn,.buy button,.ad button{background:var(--ac);color:var(--acb);border:0;border-radius:8px;min-height:44px;padding:0 16px;font-weight:700;font-size:.9rem;cursor:pointer}
-.alt,.ad button.ghost{background:none;color:var(--ink);border:1px solid var(--ln);border-radius:8px;min-height:44px;padding:0 16px;font-weight:500;font-size:.9rem;cursor:pointer}
-.ad button.ghost{color:var(--er)}
+button,input,select,textarea{font-family:inherit}
+.seg{display:flex;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;min-height:40px;border:0;border-radius:9px;background:none;color:var(--mu);font:600 .86rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ac);color:var(--acb)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.im{aspect-ratio:4/3;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:2rem}
+.im img{width:100%;height:100%;object-fit:cover;display:block}
+.cb{padding:10px;display:flex;flex-direction:column;gap:3px;flex:1}
+.cb h3{margin:0;font-size:.9rem;line-height:1.3}
+.cb h3,.cb p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cb p{margin:0;color:var(--mu);font-size:.78rem}
+.meta{font-size:.72rem;color:var(--mu)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:6px}
+.pr{font-weight:800;font-size:.95rem}.pr.fr{color:var(--ok)}
+.cart{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 12px;border:0;border-radius:22px;background:var(--ac);color:var(--acb);font:700 .82rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.cart.armed{background:var(--ok);color:#fff}
+.btn,.ad .acts button{background:var(--ac);color:var(--acb);border:0;border-radius:8px;min-height:44px;padding:0 16px;font-weight:700;font-size:.9rem;cursor:pointer}
+.alt,.ghost,.up{display:inline-flex;align-items:center;background:none;color:var(--ink);border:1px solid var(--ln);border-radius:8px;min-height:44px;padding:0 16px;font-weight:500;font-size:.9rem;cursor:pointer;margin:0}
+.ad .acts .ghost{background:none;color:var(--er);border:1px solid var(--ln)}
 button:disabled{opacity:.4;cursor:not-allowed}
-button.armed{background:var(--ok)!important;color:#fff!important}
 :focus-visible{outline:3px solid var(--ac);outline-offset:2px}
-.box{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:14px}
+.box{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px}
 .box dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
 .box dt{color:var(--mu);font-size:.85rem}.box dd{margin:0;font-weight:700;word-break:break-all}
-.note{color:var(--mu);font-size:.85rem;margin:8px 0}
-label{display:block;font-size:.8rem;color:var(--mu);margin-bottom:8px}
-input{display:block;width:100%;min-height:44px;margin-top:3px;padding:0 12px;border:1px solid var(--ln);border-radius:8px;background:var(--sf);color:var(--ink);font:inherit}
+.note{color:var(--mu);font-size:.82rem;margin:8px 0}
+label{display:block;font-size:.78rem;color:var(--mu);margin-bottom:8px}
+input,select,textarea{display:block;width:100%;min-height:44px;margin-top:3px;padding:0 12px;border:1px solid var(--ln);border-radius:8px;background:var(--sf);color:var(--ink);font:inherit;font-size:.95rem}
+textarea{padding:10px 12px;min-height:80px}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.ad{padding:14px 0;border-bottom:1px solid var(--ln)}
-.ad .g{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
-.ad .g .w{grid-column:1/-1}
-.h{padding:14px 0;border-bottom:1px solid var(--ln)}
-.h h3{margin:0;font-size:1rem}.h small{color:var(--mu)}
-.h a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:8px;background:var(--ac);color:var(--acb);font-weight:700;font-size:.9rem;text-decoration:none}
-.empty{padding:32px 8px;text-align:center;color:var(--mu)}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:20}
+.sec{background:var(--sf);border:1px solid var(--ln);border-radius:12px;margin-bottom:10px}
+.sec>summary{padding:12px 14px;font-weight:700;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.bd{padding:0 14px 14px}
+.ad{border-top:1px solid var(--ln)}
+.ps{display:flex;gap:10px;align-items:center;padding:10px 0;cursor:pointer;min-height:44px}
+.ps small{display:block;color:var(--mu);font-size:.75rem}
+.th{width:44px;height:44px;border-radius:8px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.th img{width:100%;height:100%;object-fit:cover}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.g .w{grid-column:1/-1}
+.imgbox{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.imgbox img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+.imgbox img[hidden]{display:none}
+.row{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--ln)}
+.row h3{margin:0;font-size:.95rem;word-break:break-word}.row small{color:var(--mu)}
+.row .plus{font-weight:800;color:var(--ok);white-space:nowrap}
+.row a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:8px;background:var(--ac);color:var(--acb);font-weight:700;font-size:.88rem;text-decoration:none}
+.empty{padding:28px 8px;text-align:center;color:var(--mu)}
+footer{max-width:680px;margin:0 auto;padding:18px 14px 28px;color:var(--mu);font-size:.82rem;border-top:1px solid var(--ln)}
+footer b{color:var(--ink)}footer p{margin:6px 0}
+footer .ct{display:flex;flex-wrap:wrap;gap:8px 16px;margin:8px 0}
+footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:40}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){#toast{transition:none}}
 </style>
@@ -154,22 +92,26 @@ input{display:block;width:100%;min-height:44px;margin-top:3px;padding:0 12px;bor
 <div class="wrap">
 <header>
   <div class="top">
-    <div><h1>Viet Esigma Shop</h1><p class="tag">Tài liệu tải về ngay sau khi mua</p></div>
+    <h1>Viet Esigma Shop<small>Tài liệu tải về ngay sau khi mua</small></h1>
     <div class="acc"><button id="accbtn" class="accbtn" data-a="menu" aria-haspopup="true" aria-expanded="false"></button><div id="accmenu" class="accmenu" hidden></div></div>
   </div>
   <nav id="nav" role="tablist"></nav>
 </header>
 <main id="app"><div class="empty">Đang tải…</div></main>
 </div>
+<footer id="foot"></footer>
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 var API='https://jjwlazyhanjrzvikajxh.supabase.co',KEY='sb_publishable_9bRwAIKYvcXzrgxXXUVVmw_4T8ib5ha',SK='ves_session';
-var sess=null,P=null,products=[],orders=[],bank={},adm={prods:[],links:{}},tab='shop',authMode='login',menuOpen=false,armed=null,busy=false,tt;
+var sess=null,P=null,products=[],orders=[],topups=[],cfg={},adm={prods:[],links:{}},tab='shop',kind='paid',authMode='login',menuOpen=false,armed=null,busy=false,tt,openSec=new Set();
 try{sess=JSON.parse(localStorage.getItem(SK))}catch(e){}
 var $=s=>document.querySelector(s);
-var fmt=n=>new Intl.NumberFormat('vi-VN').format(n)+'đ';
+var fmt=n=>new Intl.NumberFormat('vi-VN').format(n||0)+'đ';
+var dt=s=>new Date(s).toLocaleString('vi-VN',{dateStyle:'short',timeStyle:'short'});
 var esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-var safe=u=>/^https?:\/\//i.test(u)?u:'#';
+var isUrl=u=>/^https?:\/\//i.test(u);
+var safe=u=>isUrl(u)?u:'#';
+var CART='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg>';
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2800)}
 function vi(m){m=String(m);
  if(/invalid login/i.test(m))return 'Sai email hoặc mật khẩu';
@@ -178,34 +120,44 @@ function vi(m){m=String(m);
  if(/valid email|invalid format/i.test(m))return 'Email chưa đúng';
  if(/rate limit/i.test(m))return 'Thử quá nhiều lần, hãy đợi vài phút';
  if(/Failed to fetch|NetworkError/i.test(m))return 'Mất kết nối mạng, hãy thử lại';
+ if(/column|image_url|is_free|sold|claim_free/i.test(m))return 'Cần chạy lệnh SQL cập nhật trong Supabase trước';
  return m}
 function setSess(s){sess=s;try{s?localStorage.setItem(SK,JSON.stringify(s)):localStorage.removeItem(SK)}catch(e){}}
 function mk(d){return{access_token:d.access_token,refresh_token:d.refresh_token,exp:Date.now()+(d.expires_in-60)*1000,uid:d.user.id,email:d.user.email}}
 async function auth(path,body){
  var r=await fetch(API+'/auth/v1/'+path,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
  var d=await r.json();if(!r.ok)throw new Error(d.msg||d.error_description||d.message||'Có lỗi xảy ra');return d}
+async function fresh(){if(sess&&Date.now()>sess.exp){try{setSess(mk(await auth('token?grant_type=refresh_token',{refresh_token:sess.refresh_token})))}catch(e){setSess(null);P=null}}}
 async function api(path,o){
- o=o||{};
- if(sess&&Date.now()>sess.exp){try{setSess(mk(await auth('token?grant_type=refresh_token',{refresh_token:sess.refresh_token})))}catch(e){setSess(null);P=null}}
+ o=o||{};await fresh();
  var h={apikey:KEY,'Content-Type':'application/json'};
  if(sess)h.Authorization='Bearer '+sess.access_token;
  if(o.prefer)h.Prefer=o.prefer;
  var r=await fetch(API+'/rest/v1/'+path,{method:o.m||'GET',headers:h,body:o.b?JSON.stringify(o.b):undefined});
  var t=await r.text(),d=null;try{d=t?JSON.parse(t):null}catch(e){}
  if(!r.ok)throw new Error((d&&(d.message||d.hint))||'Lỗi '+r.status);return d}
+function shrink(f){return new Promise((ok,no)=>{var im=new Image(),u=URL.createObjectURL(f);
+ im.onload=()=>{var k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas'),x;c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>b?ok(b):no(new Error('Không xử lý được ảnh')),'image/jpeg',.82)};
+ im.onerror=()=>no(new Error('File không phải ảnh'));im.src=u})}
+async function upImg(f){
+ var b=await shrink(f);await fresh();if(!sess)throw new Error('Hãy đăng nhập lại');
+ var n='p'+Date.now()+'.jpg',r=await fetch(API+'/storage/v1/object/product-images/'+n,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+sess.access_token,'Content-Type':'image/jpeg'},body:b});
+ if(!r.ok){var d={};try{d=await r.json()}catch(e){}throw new Error(d.message||'Tải ảnh thất bại')}
+ return API+'/storage/v1/object/public/product-images/'+n}
 
 async function refresh(){
  try{
-  products=await api('products?select=id,name,description,price,stock&active=eq.true&order=id');
-  var s=await api('settings?select=key,value');bank={};s.forEach(x=>bank[x.key]=x.value);
+  products=await api('products?select=id,name,description,price,stock,image_url,is_free,sold&active=eq.true&order=id');
+  var s=await api('settings?select=key,value');cfg={};s.forEach(x=>cfg[x.key]=x.value);
   if(sess){
    var p=await api('profiles?select=email,nap_code,balance,is_admin&id=eq.'+sess.uid);P=p[0]||null;
    orders=await api('orders?select=id,product_name,price,link,created_at&order=created_at.desc');
+   topups=await api('topups?select=id,amount,content,created_at&order=created_at.desc&limit=30');
    if(P&&P.is_admin){
     adm.prods=await api('products?select=*&order=id');
     var l=await api('product_secrets?select=product_id,link');adm.links={};l.forEach(x=>adm.links[x.product_id]=x.link);
    }
-  }else{P=null;orders=[]}
+  }else{P=null;orders=[];topups=[]}
  }catch(e){
   if(/JWT|expired/i.test(e.message)){setSess(null);P=null}
   toast(vi(e.message));
@@ -214,63 +166,48 @@ async function refresh(){
 }
 
 function vAuth(){var s=authMode==='signup';return '<h2>'+(s?'Đăng ký tài khoản':'Đăng nhập')+'</h2><label>Email<input id="em" type="email" autocomplete="email" autocapitalize="none"></label><label>Mật khẩu (từ 6 ký tự)<input id="pw" type="password" autocomplete="'+(s?'new-password':'current-password')+'"></label><div class="acts"><button class="btn" data-a="'+(s?'signup':'login')+'">'+(s?'Đăng ký':'Đăng nhập')+'</button><button class="alt" data-a="mode" data-m="'+(s?'login':'signup')+'">'+(s?'Đã có tài khoản? Đăng nhập':'Chưa có tài khoản? Đăng ký')+'</button></div>'}
-
-/* HÀM VSHOP ĐÃ BỎ NGÔI SAO */
+function card(p){
+ var fr=p.is_free,out=!fr&&p.stock<1,a=armed===p.id;
+ var btn=fr?'<button class="cart" data-a="claim" data-id="'+p.id+'">Nhận</button>':'<button class="cart'+(a?' armed':'')+'" data-a="buy" data-id="'+p.id+'" aria-label="'+(a?'Xác nhận mua':'Mua '+esc(p.name))+'"'+(out?' disabled':'')+'>'+(a?'Xác nhận':CART)+'</button>';
+ return '<li class="card"><div class="im">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="" loading="lazy">':'📄')+'</div><div class="cb"><h3>'+esc(p.name)+'</h3><p>'+esc(p.description)+'</p><span class="meta">'+(fr?'Đã nhận ':'Đã bán ')+(p.sold||0)+' lượt'+(fr?'':' · '+(out?'Hết hàng':'Còn '+p.stock))+'</span><div class="foot"><span class="pr'+(fr?' fr':'')+'">'+(fr?'Miễn phí':fmt(p.price))+'</span>'+btn+'</div></div></li>'}
 function vShop(){
- if(!products.length)return '<div class="empty">Shop chưa có sản phẩm nào.</div>';
- 
- return '<div class="category-block">' +
-   '<div class="category-header"><span>SẢN PHẨM MỚI NHẤT</span></div>' +
-   products.map(p=>{
-     var out = p.stock < 1, a = armed === p.id;
-     return '<div class="product-card">' +
-       '<h3 class="product-title">' + esc(p.name) + '</h3>' +
-       '<p class="product-desc">' + esc(p.description) + '</p>' +
-       '<div class="product-badges">' +
-         '<span class="badge badge-price">💳 ' + fmt(p.price) + '</span>' +
-         '<span class="badge">Còn lại: ' + p.stock + '</span>' +
-         '<span class="badge">Đã bán: ' + (p.id * 3 + 2) + '</span>' +
-       '</div>' +
-       '<button class="btn-buy-full' + (a ? ' armed' : '') + '" data-a="buy" data-id="' + p.id + '"' + (out ? ' disabled' : '') + '>' +
-         (out ? '🙁 HẾT HÀNG' : (a ? '⚠️ Bấm lại để mua' : '🛒 MUA NGAY')) +
-       '</button>' +
-     '</div>';
-   }).join('') +
- '</div>';
-}
-
+ var nf=products.filter(p=>p.is_free).length,f=products.filter(p=>!!p.is_free===(kind==='free'));
+ return '<div class="seg"><button data-a="kind" data-k="paid" aria-pressed="'+(kind==='paid')+'">Mất phí ('+(products.length-nf)+')</button><button data-a="kind" data-k="free" aria-pressed="'+(kind==='free')+'">Miễn phí ('+nf+')</button></div>'+(f.length?'<ul class="grid">'+f.map(card).join('')+'</ul>':'<div class="empty">Chưa có sản phẩm ở mục này.</div>')}
 function vTopup(){
  if(!P)return vAuth();
- var ok=bank.bank_no;
- return '<h2>Chuyển khoản để nạp tiền</h2><div class="box">'+(ok?'<dl><dt>Ngân hàng</dt><dd>'+esc(bank.bank_name)+'</dd><dt>Số tài khoản</dt><dd>'+esc(bank.bank_no)+'</dd><dt>Chủ tài khoản</dt><dd>'+esc(bank.bank_owner)+'</dd><dt>Nội dung</dt><dd>'+esc(P.nap_code)+'</dd></dl>':'<p class="note" style="margin:0">Shop chưa cập nhật thông tin ngân hàng.</p>')+'</div>'+
- '<div class="acts"><button class="alt" data-a="copycode">Sao chép nội dung</button><button class="alt" data-a="reload">Làm mới số dư</button></div>'+
- '<p class="note">Chuyển khoản đúng nội dung ở trên để tiền vào đúng tài khoản của bạn. Nếu chưa thấy tiền sau vài phút, bấm Làm mới số dư.</p>'+
- '<h2>Tài khoản</h2><div class="box"><dl><dt>Email</dt><dd>'+esc(P.email)+'</dd></dl></div><div class="acts"><button class="alt" data-a="logout">Đăng xuất</button></div>';
-}
+ return '<h2>Chuyển khoản để nạp tiền</h2><div class="box">'+(cfg.bank_no?'<dl><dt>Ngân hàng</dt><dd>'+esc(cfg.bank_name)+'</dd><dt>Số tài khoản</dt><dd>'+esc(cfg.bank_no)+'</dd><dt>Chủ tài khoản</dt><dd>'+esc(cfg.bank_owner)+'</dd><dt>Nội dung</dt><dd>'+esc(P.nap_code)+'</dd></dl>':'<p class="note" style="margin:0">Shop chưa cập nhật thông tin ngân hàng.</p>')+'</div><div class="acts"><button class="alt" data-a="copycode">Sao chép nội dung</button><button class="alt" data-a="reload">Làm mới số dư</button></div><p class="note">Chuyển khoản đúng nội dung ở trên để tiền vào đúng tài khoản của bạn. Chưa thấy tiền sau vài phút thì bấm Làm mới số dư.</p>'+
+ '<h2>Lịch sử nạp tiền</h2>'+(topups.length?'<ul>'+topups.map(x=>'<li class="row"><div><h3>'+esc(x.content||'Nạp tiền')+'</h3><small>'+dt(x.created_at)+'</small></div><span class="plus">+'+fmt(x.amount)+'</span></li>').join('')+'</ul>':'<div class="empty">Chưa có giao dịch nạp tiền nào.</div>')}
 function vHist(){
  if(!P)return vAuth();
- if(!orders.length)return '<div class="empty">Bạn chưa mua sản phẩm nào. Sản phẩm đã mua sẽ hiện ở đây kèm link tải.</div>';
- return '<ul>'+orders.map(x=>'<li class="h"><h3>'+esc(x.product_name)+'</h3><small>'+new Date(x.created_at).toLocaleString('vi-VN')+' · '+fmt(x.price)+'</small><div class="acts"><a href="'+esc(safe(x.link))+'" target="_blank" rel="noopener noreferrer">Mở link tải</a><button class="alt" data-a="copy" data-id="'+x.id+'">Sao chép link</button></div></li>').join('')+'</ul>';
-}
+ if(!orders.length)return '<div class="empty">Bạn chưa mua hoặc nhận sản phẩm nào. Sản phẩm sẽ hiện ở đây kèm link tải.</div>';
+ return '<ul>'+orders.map(x=>'<li class="row" style="display:block"><h3>'+esc(x.product_name)+'</h3><small>'+dt(x.created_at)+' · '+(x.price?fmt(x.price):'Miễn phí')+'</small><div class="acts"><a href="'+esc(safe(x.link))+'" target="_blank" rel="noopener noreferrer">Mở link tải</a><button class="alt" data-a="copy" data-id="'+x.id+'">Sao chép link</button></div></li>').join('')+'</ul>'}
+function fields(p){p=p||{};return '<div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Giới thiệu<input data-f="description" value="'+esc(p.description)+'"></label><label>Loại<select data-f="is_free"><option value="0"'+(p.is_free?'':' selected')+'>Mất phí (Mua)</option><option value="1"'+(p.is_free?' selected':'')+'>Miễn phí (Nhận)</option></select></label><label>Giá (đ)<input data-f="price" type="number" inputmode="numeric" value="'+(p.price||0)+'"></label><label>Số lượng<input data-f="stock" type="number" inputmode="numeric" value="'+(p.stock||0)+'"></label><label>Link tải<input data-f="link" value="'+esc(adm.links[p.id]||'')+'" placeholder="https://"></label></div><div class="imgbox"><img '+(p.image_url?'src="'+esc(safe(p.image_url))+'"':'hidden')+' alt=""><input type="hidden" data-f="image_url" value="'+esc(p.image_url||'')+'"><label class="up">Chọn ảnh<input type="file" accept="image/*" hidden></label></div>'}
+function sec(k,t,body){return '<details class="sec" data-sec="'+k+'"'+(openSec.has(k)?' open':'')+'><summary>'+t+'</summary><div class="bd">'+body+'</div></details>'}
+function prow(p){return '<li class="ad" data-id="'+p.id+'"><details data-sec="p'+p.id+'"'+(openSec.has('p'+p.id)?' open':'')+'><summary class="ps"><span class="th">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="">':'📄')+'</span><span><b>'+esc(p.name)+'</b><small>'+(p.is_free?'Miễn phí':fmt(p.price)+' · còn '+p.stock)+' · '+(p.sold||0)+' lượt</small></span></summary>'+fields(p)+'<div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></details></li>'}
 function vAdmin(){
  if(!P||!P.is_admin)return vShop();
- return '<h2>Cộng tiền cho khách</h2><label>Email của khách<input id="cu" type="email" autocapitalize="none"></label><label>Số tiền (đ)<input id="ca" type="number" inputmode="numeric" min="1"></label><button class="btn" data-a="credit">Cộng tiền</button>'+
- '<h2>Thông tin ngân hàng</h2><label>Ngân hàng<input id="bn" value="'+esc(bank.bank_name)+'"></label><label>Số tài khoản<input id="bo" inputmode="numeric" value="'+esc(bank.bank_no)+'"></label><label>Chủ tài khoản<input id="bw" value="'+esc(bank.bank_owner)+'"></label><button class="btn" data-a="bank">Lưu ngân hàng</button>'+
- '<h2>Sản phẩm</h2><ul>'+adm.prods.map(p=>'<li class="ad" data-id="'+p.id+'"><div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Mô tả<input data-f="description" value="'+esc(p.description)+'"></label><label>Giá (đ)<input data-f="price" type="number" inputmode="numeric" value="'+p.price+'"></label><label>Còn lại<input data-f="stock" type="number" inputmode="numeric" value="'+p.stock+'"></label><label class="w">Link tải<input data-f="link" value="'+esc(adm.links[p.id]||'')+'"></label></div><div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></li>').join('')+'</ul>'+
- '<h2>Thêm sản phẩm mới</h2><label>Tên<input id="nn"></label><label>Mô tả<input id="nd"></label><label>Giá (đ)<input id="np" type="number" inputmode="numeric"></label><label>Số lượng<input id="ns" type="number" inputmode="numeric"></label><label>Link tải<input id="nl" placeholder="https://"></label><button class="btn" data-a="add">Thêm sản phẩm</button>';
-}
-function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Đã mua']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
+ var pa=adm.prods.filter(p=>!p.is_free),fr=adm.prods.filter(p=>p.is_free),c=cfg;
+ return sec('credit','Cộng tiền cho khách','<label>Email của khách<input id="cu" type="email" autocapitalize="none"></label><label>Số tiền (đ)<input id="ca" type="number" inputmode="numeric" min="1"></label><button class="btn" data-a="credit">Cộng tiền</button>')+
+ sec('paid','Sản phẩm mất phí ('+pa.length+')','<ul>'+pa.map(prow).join('')+'</ul>')+
+ sec('free','Sản phẩm miễn phí ('+fr.length+')','<ul>'+fr.map(prow).join('')+'</ul>')+
+ sec('add','Thêm sản phẩm mới','<div id="addf">'+fields()+'</div><div class="acts"><button class="btn" data-a="add">Thêm sản phẩm</button></div>')+
+ sec('bank','Ngân hàng nhận tiền','<label>Ngân hàng<input id="bn" value="'+esc(c.bank_name)+'"></label><label>Số tài khoản<input id="bo" inputmode="numeric" value="'+esc(c.bank_no)+'"></label><label>Chủ tài khoản<input id="bw" value="'+esc(c.bank_owner)+'"></label><button class="btn" data-a="bank">Lưu ngân hàng</button>')+
+ sec('info','Thông tin quản trị (chân trang)','<label>Giới thiệu shop<textarea id="ia">'+esc(c.shop_about)+'</textarea></label><label>Số Zalo<input id="iz" inputmode="tel" value="'+esc(c.contact_zalo)+'"></label><label>Link Facebook<input id="ifb" value="'+esc(c.contact_facebook)+'" placeholder="https://"></label><label>Email liên hệ<input id="ie" value="'+esc(c.contact_email)+'"></label><label>Giờ hỗ trợ<input id="ih" value="'+esc(c.contact_hours)+'"></label><button class="btn" data-a="info">Lưu thông tin</button>')}
+function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
 function render(){
  var T=tabs();if(tab==='auth'?!!P:!T.some(t=>t[0]===tab))tab='shop';
  var ab=$('#accbtn'),am=$('#accmenu');
  ab.innerHTML=P?'<b>'+fmt(P.balance)+'</b><span>▾</span>':'<span>Tài khoản ▾</span>';
  ab.setAttribute('aria-expanded',String(menuOpen));am.hidden=!menuOpen;
- am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Đã mua</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
+ am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Lịch sử</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
  $('#nav').innerHTML=T.map(t=>'<button role="tab" data-a="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>').join('');
  $('#app').innerHTML={shop:vShop,auth:vAuth,topup:vTopup,hist:vHist,admin:vAdmin}[tab]();
+ var z=cfg.contact_zalo,fb=cfg.contact_facebook,em=cfg.contact_email;
+ $('#foot').innerHTML='<b>Viet Esigma Shop</b>'+(cfg.shop_about?'<p>'+esc(cfg.shop_about)+'</p>':'')+((z||isUrl(fb)||em)?'<div class="ct">'+(z?'<a href="https://zalo.me/'+esc(z.replace(/\D/g,''))+'" target="_blank" rel="noopener noreferrer">Zalo '+esc(z)+'</a>':'')+(isUrl(fb)?'<a href="'+esc(fb)+'" target="_blank" rel="noopener noreferrer">Facebook</a>':'')+(em?'<a href="mailto:'+esc(em)+'">'+esc(em)+'</a>':'')+'</div>':'')+(cfg.contact_hours?'<p>'+esc(cfg.contact_hours)+'</p>':'')+'<p>© '+new Date().getFullYear()+' Viet Esigma Shop</p>';
 }
 var num=id=>Math.max(0,Math.floor(Number($(id).value)||0));
-var isUrl=u=>/^https?:\/\//i.test(u);
+function collect(c){var v={};c.querySelectorAll('[data-f]').forEach(i=>v[i.dataset.f]=i.value.trim());v.is_free=v.is_free==='1';v.price=v.is_free?0:Math.max(0,Math.floor(Number(v.price)||0));v.stock=Math.max(0,Math.floor(Number(v.stock)||0));return v}
+function pbody(v){return{name:v.name,description:v.description,price:v.price,stock:v.stock,is_free:v.is_free,image_url:v.image_url||null}}
 
 document.addEventListener('click',async function(e){
  var b=e.target.closest('[data-a]');
@@ -284,6 +221,7 @@ document.addEventListener('click',async function(e){
   else if(a==='authgo'){authMode=b.dataset.m;tab='auth';menuOpen=false;armed=null;window.scrollTo(0,0)}
   else if(a==='mode'){authMode=b.dataset.m}
   else if(a==='tab'){menuOpen=false;tab=b.dataset.t;armed=null;window.scrollTo(0,0)}
+  else if(a==='kind'){kind=b.dataset.k;armed=null}
   else if(a==='login'||a==='signup'){
    var em=$('#em').value.trim(),pw=$('#pw').value;
    if(!em||!pw){toast('Hãy nhập email và mật khẩu')}
@@ -293,53 +231,63 @@ document.addEventListener('click',async function(e){
     else{setSess(mk(d));tab='shop';await refresh();toast('Xin chào '+em)}
    }
   }
-  else if(a==='logout'){setSess(null);P=null;orders=[];adm={prods:[],links:{}};tab='shop';menuOpen=false;toast('Đã đăng xuất')}
+  else if(a==='logout'){setSess(null);P=null;orders=[];topups=[];adm={prods:[],links:{}};tab='shop';menuOpen=false;toast('Đã đăng xuất')}
   else if(a==='buy'){
    p=products.find(x=>x.id===id);
    if(!P){authMode='login';tab='auth';toast('Hãy đăng nhập để mua hàng')}
    else if(!p||p.stock<1){toast('Sản phẩm đã hết hàng')}
    else if(P.balance<p.price){armed=null;tab='topup';toast('Số dư chưa đủ, còn thiếu '+fmt(p.price-P.balance)+'. Hãy nạp thêm tiền.')}
-   else if(armed!==id){armed=id;toast('Bấm “Mua ngay” lần nữa để xác nhận')}
-   else{armed=null;await api('rpc/buy_product',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Mua thành công. Link tải nằm ở mục Đã mua.')}
+   else if(armed!==id){armed=id;toast('Bấm lần nữa để xác nhận mua')}
+   else{armed=null;await api('rpc/buy_product',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Mua thành công. Link tải nằm ở mục Lịch sử.')}
+  }
+  else if(a==='claim'){
+   if(!P){authMode='login';tab='auth';toast('Hãy đăng nhập để nhận tài liệu')}
+   else{await api('rpc/claim_free',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Đã nhận. Link tải nằm ở mục Lịch sử.')}
   }
   else if(a==='copy'){var o=orders.find(x=>x.id===id);try{await navigator.clipboard.writeText(o.link);toast('Đã sao chép link')}catch(x){toast('Không sao chép được, hãy bấm Mở link tải')}}
   else if(a==='copycode'){try{await navigator.clipboard.writeText(P.nap_code);toast('Đã sao chép nội dung chuyển khoản')}catch(x){toast('Hãy tự chép: '+P.nap_code)}}
-  else if(a==='reload'){await refresh();toast('Đã làm mới số dư')}
+  else if(a==='reload'){await refresh();toast('Đã làm mới')}
   else if(a==='credit'){
    var ce=$('#cu').value.trim(),ca=num('#ca');
    if(!ce||!ca){toast('Nhập email và số tiền')}
    else{await api('rpc/admin_add_balance',{m:'POST',b:{p_email:ce,p_amount:ca}});await refresh();toast('Đã cộng '+fmt(ca)+' cho '+ce)}
   }
-  else if(a==='bank'){
-   await Promise.all([['bank_name','#bn'],['bank_no','#bo'],['bank_owner','#bw']].map(x=>api('settings?key=eq.'+x[0],{m:'PATCH',b:{value:$(x[1]).value.trim()}})));
-   await refresh();toast('Đã lưu thông tin ngân hàng')
+  else if(a==='bank'||a==='info'){
+   var ids=a==='bank'?{bank_name:'#bn',bank_no:'#bo',bank_owner:'#bw'}:{shop_about:'#ia',contact_zalo:'#iz',contact_facebook:'#ifb',contact_email:'#ie',contact_hours:'#ih'};
+   await api('settings',{m:'POST',prefer:'resolution=merge-duplicates',b:Object.keys(ids).map(k=>({key:k,value:$(ids[k]).value.trim()}))});
+   await refresh();toast('Đã lưu')
   }
   else if(a==='save'){
-   var v={};b.closest('li').querySelectorAll('[data-f]').forEach(i=>v[i.dataset.f]=i.value.trim());
+   var v=collect(b.closest('li'));
    if(!v.name||!isUrl(v.link)){toast('Cần có tên và link bắt đầu bằng https://')}
    else{
-    await api('products?id=eq.'+id,{m:'PATCH',b:{name:v.name,description:v.description,price:Math.max(0,Math.floor(Number(v.price)||0)),stock:Math.max(0,Math.floor(Number(v.stock)||0))}});
+    await api('products?id=eq.'+id,{m:'PATCH',b:pbody(v)});
     await api('product_secrets',{m:'POST',prefer:'resolution=merge-duplicates',b:{product_id:id,link:v.link}});
     await refresh();toast('Đã lưu sản phẩm')
    }
   }
   else if(a==='del'){await api('products?id=eq.'+id,{m:'DELETE'});await refresh();toast('Đã xoá sản phẩm')}
   else if(a==='add'){
-   var nm=$('#nn').value.trim(),lk=$('#nl').value.trim();
-   if(!nm||!isUrl(lk)){toast('Cần có tên và link bắt đầu bằng https://')}
+   var n=collect($('#addf'));
+   if(!n.name||!isUrl(n.link)){toast('Cần có tên và link bắt đầu bằng https://')}
    else{
-    var r=await api('products',{m:'POST',prefer:'return=representation',b:{name:nm,description:$('#nd').value.trim(),price:num('#np'),stock:num('#ns')}});
-    await api('product_secrets',{m:'POST',b:{product_id:r[0].id,link:lk}});
-    await refresh();toast('Đã thêm sản phẩm')
+    var r=await api('products',{m:'POST',prefer:'return=representation',b:pbody(n)});
+    await api('product_secrets',{m:'POST',b:{product_id:r[0].id,link:n.link}});
+    openSec.delete('add');await refresh();toast('Đã thêm sản phẩm')
    }
   }
  }catch(x){toast(vi(x.message))}
  busy=false;render();
 });
-setInterval(async function(){
- if(!sess||busy||tab!=='topup')return;
- try{var p=await api('profiles?select=email,nap_code,balance,is_admin&id=eq.'+sess.uid);if(p[0]){P=p[0];render()}}catch(e){}
-},15000);
+document.addEventListener('change',async function(e){
+ var f=e.target;if(f.type!=='file'||!f.files[0]||busy)return;
+ busy=true;toast('Đang tải ảnh…');
+ try{var u=await upImg(f.files[0]),bx=f.closest('.imgbox'),im=bx.querySelector('img');bx.querySelector('[data-f="image_url"]').value=u;im.src=u;im.hidden=false;toast('Đã tải ảnh. Bấm Lưu hoặc Thêm để hoàn tất.')}
+ catch(x){toast(vi(x.message))}
+ busy=false;f.value='';
+});
+document.addEventListener('toggle',function(e){var d=e.target;if(d.dataset&&d.dataset.sec){d.open?openSec.add(d.dataset.sec):openSec.delete(d.dataset.sec)}},true);
+setInterval(function(){if(sess&&!busy&&tab==='topup')refresh()},15000);
 refresh();
 </script>
 </body>
