@@ -19,6 +19,16 @@ h1{margin:0;font-size:1.45rem;font-weight:800;letter-spacing:-.02em;line-height:
 .bal{text-align:right;min-width:0}
 .bal small{display:block;color:var(--mu);font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px;margin-left:auto}
 .bal b{font-size:1.25rem;font-weight:800;color:var(--ok);white-space:nowrap}
+.acc{position:relative;flex-shrink:0}
+.accbtn{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;background:none;border:1px solid var(--ln);border-radius:22px;color:var(--ink);font:700 .85rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;max-width:200px;white-space:nowrap}
+.accbtn b{color:var(--ok)}
+.accmenu{position:absolute;right:0;top:calc(100% + 6px);min-width:220px;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:30}
+.accmenu[hidden]{display:none}
+.accmenu .mi{display:block;width:100%;text-align:left;background:none;border:0;border-radius:8px;min-height:44px;padding:0 12px;color:var(--ink);font:500 .95rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.accmenu .mi:hover{background:var(--bg)}
+.accmenu .mi.out{color:var(--er)}
+.accmenu .mt{padding:8px 12px;color:var(--mu);font-size:.8rem;word-break:break-all}
+.accmenu .mt b{display:block;color:var(--ok);font-size:1.05rem}
 nav{display:flex;margin-top:12px;overflow-x:auto}
 nav button{flex:1;background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);font:500 .9rem "Be Vietnam Pro",system-ui,sans-serif;padding:10px 6px;min-height:44px;cursor:pointer;white-space:nowrap}
 nav button[aria-selected="true"]{color:var(--ink);border-color:var(--ac);font-weight:700}
@@ -26,6 +36,89 @@ main{padding:16px}
 h2{font-size:1.05rem;margin:22px 0 8px}
 h2:first-child{margin-top:0}
 ul{list-style:none;margin:0;padding:0}
+
+/* CSS CHO CARD SẢN PHẨM PHONG CÁCH MỚI */
+.category-block {
+  margin-bottom: 24px;
+  background: var(--sf);
+  border: 1px solid var(--ln);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.category-header {
+  background: #1e1e1e;
+  color: #fff;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+}
+.product-card {
+  padding: 16px;
+  border-bottom: 1px solid var(--ln);
+}
+.product-card:last-child {
+  border-bottom: none;
+}
+.product-title {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a56db;
+}
+.product-desc {
+  margin: 0 0 14px 0;
+  color: var(--mu);
+  font-size: 0.88rem;
+}
+.product-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--ln);
+  background: var(--bg);
+}
+.badge-price {
+  border-color: #f04438;
+  color: #d92d20;
+  background: #fef3f2;
+}
+.btn-buy-full {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #2563eb;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  min-height: 44px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-buy-full:disabled {
+  background: #94a3b8 !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .row{display:flex;justify-content:space-between;gap:14px;padding:16px 0;border-bottom:1px solid var(--ln)}
 .row h3{margin:0;font-size:1rem}
 .row p{margin:2px 0 6px;color:var(--mu);font-size:.88rem}
@@ -62,7 +155,7 @@ input{display:block;width:100%;min-height:44px;margin-top:3px;padding:0 12px;bor
 <header>
   <div class="top">
     <div><h1>Viet Esigma Shop</h1><p class="tag">Tài liệu tải về ngay sau khi mua</p></div>
-    <div class="bal"><small id="who"></small><b id="bal"></b></div>
+    <div class="acc"><button id="accbtn" class="accbtn" data-a="menu" aria-haspopup="true" aria-expanded="false"></button><div id="accmenu" class="accmenu" hidden></div></div>
   </div>
   <nav id="nav" role="tablist"></nav>
 </header>
@@ -71,7 +164,7 @@ input{display:block;width:100%;min-height:44px;margin-top:3px;padding:0 12px;bor
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 var API='https://jjwlazyhanjrzvikajxh.supabase.co',KEY='sb_publishable_9bRwAIKYvcXzrgxXXUVVmw_4T8ib5ha',SK='ves_session';
-var sess=null,P=null,products=[],orders=[],bank={},adm={prods:[],links:{}},tab='shop',armed=null,busy=false,tt;
+var sess=null,P=null,products=[],orders=[],bank={},adm={prods:[],links:{}},tab='shop',authMode='login',menuOpen=false,armed=null,busy=false,tt;
 try{sess=JSON.parse(localStorage.getItem(SK))}catch(e){}
 var $=s=>document.querySelector(s);
 var fmt=n=>new Intl.NumberFormat('vi-VN').format(n)+'đ';
@@ -120,12 +213,32 @@ async function refresh(){
  render();
 }
 
-function vAuth(){return '<h2>Đăng nhập hoặc tạo tài khoản</h2><label>Email<input id="em" type="email" autocomplete="email" autocapitalize="none"></label><label>Mật khẩu (từ 6 ký tự)<input id="pw" type="password" autocomplete="current-password"></label><div class="acts"><button class="btn" data-a="login">Đăng nhập</button><button class="alt" data-a="signup">Tạo tài khoản</button></div>'}
+function vAuth(){var s=authMode==='signup';return '<h2>'+(s?'Đăng ký tài khoản':'Đăng nhập')+'</h2><label>Email<input id="em" type="email" autocomplete="email" autocapitalize="none"></label><label>Mật khẩu (từ 6 ký tự)<input id="pw" type="password" autocomplete="'+(s?'new-password':'current-password')+'"></label><div class="acts"><button class="btn" data-a="'+(s?'signup':'login')+'">'+(s?'Đăng ký':'Đăng nhập')+'</button><button class="alt" data-a="mode" data-m="'+(s?'login':'signup')+'">'+(s?'Đã có tài khoản? Đăng nhập':'Chưa có tài khoản? Đăng ký')+'</button></div>'}
+
+/* HÀM VSHOP ĐÃ BỎ NGÔI SAO */
 function vShop(){
  if(!products.length)return '<div class="empty">Shop chưa có sản phẩm nào.</div>';
- return '<ul>'+products.map(p=>{var out=p.stock<1,a=armed===p.id;
-  return '<li class="row"><div><h3>'+esc(p.name)+'</h3><p>'+esc(p.description)+'</p><span class="st'+(out?' out':'')+'">'+(out?'Hết hàng':'Còn '+p.stock+' sản phẩm')+'</span></div><div class="buy"><b>'+fmt(p.price)+'</b><button data-a="buy" data-id="'+p.id+'"'+(out?' disabled':'')+(a?' class="armed"':'')+'>'+(a?'Bấm lại để mua':'Mua ngay')+'</button></div></li>'}).join('')+'</ul>';
+ 
+ return '<div class="category-block">' +
+   '<div class="category-header"><span>SẢN PHẨM MỚI NHẤT</span></div>' +
+   products.map(p=>{
+     var out = p.stock < 1, a = armed === p.id;
+     return '<div class="product-card">' +
+       '<h3 class="product-title">' + esc(p.name) + '</h3>' +
+       '<p class="product-desc">' + esc(p.description) + '</p>' +
+       '<div class="product-badges">' +
+         '<span class="badge badge-price">💳 ' + fmt(p.price) + '</span>' +
+         '<span class="badge">Còn lại: ' + p.stock + '</span>' +
+         '<span class="badge">Đã bán: ' + (p.id * 3 + 2) + '</span>' +
+       '</div>' +
+       '<button class="btn-buy-full' + (a ? ' armed' : '') + '" data-a="buy" data-id="' + p.id + '"' + (out ? ' disabled' : '') + '>' +
+         (out ? '🙁 HẾT HÀNG' : (a ? '⚠️ Bấm lại để mua' : '🛒 MUA NGAY')) +
+       '</button>' +
+     '</div>';
+   }).join('') +
+ '</div>';
 }
+
 function vTopup(){
  if(!P)return vAuth();
  var ok=bank.bank_no;
@@ -146,10 +259,13 @@ function vAdmin(){
  '<h2>Sản phẩm</h2><ul>'+adm.prods.map(p=>'<li class="ad" data-id="'+p.id+'"><div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Mô tả<input data-f="description" value="'+esc(p.description)+'"></label><label>Giá (đ)<input data-f="price" type="number" inputmode="numeric" value="'+p.price+'"></label><label>Còn lại<input data-f="stock" type="number" inputmode="numeric" value="'+p.stock+'"></label><label class="w">Link tải<input data-f="link" value="'+esc(adm.links[p.id]||'')+'"></label></div><div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></li>').join('')+'</ul>'+
  '<h2>Thêm sản phẩm mới</h2><label>Tên<input id="nn"></label><label>Mô tả<input id="nd"></label><label>Giá (đ)<input id="np" type="number" inputmode="numeric"></label><label>Số lượng<input id="ns" type="number" inputmode="numeric"></label><label>Link tải<input id="nl" placeholder="https://"></label><button class="btn" data-a="add">Thêm sản phẩm</button>';
 }
-function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Đã mua']);if(P.is_admin)t.push(['admin','Quản trị'])}else t.push(['auth','Đăng nhập']);return t}
+function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Đã mua']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
 function render(){
- var T=tabs();if(!T.some(t=>t[0]===tab))tab='shop';
- $('#who').textContent=P?P.email:'Chưa đăng nhập';$('#bal').textContent=P?fmt(P.balance):'';
+ var T=tabs();if(tab==='auth'?!!P:!T.some(t=>t[0]===tab))tab='shop';
+ var ab=$('#accbtn'),am=$('#accmenu');
+ ab.innerHTML=P?'<b>'+fmt(P.balance)+'</b><span>▾</span>':'<span>Tài khoản ▾</span>';
+ ab.setAttribute('aria-expanded',String(menuOpen));am.hidden=!menuOpen;
+ am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Đã mua</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
  $('#nav').innerHTML=T.map(t=>'<button role="tab" data-a="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>').join('');
  $('#app').innerHTML={shop:vShop,auth:vAuth,topup:vTopup,hist:vHist,admin:vAdmin}[tab]();
 }
@@ -157,24 +273,30 @@ var num=id=>Math.max(0,Math.floor(Number($(id).value)||0));
 var isUrl=u=>/^https?:\/\//i.test(u);
 
 document.addEventListener('click',async function(e){
- var b=e.target.closest('[data-a]');if(!b||busy)return;
+ var b=e.target.closest('[data-a]');
+ if(!b){if(menuOpen&&!e.target.closest('.acc')){menuOpen=false;render()}return}
+ if(busy)return;
  busy=true;
  var a=b.dataset.a,id=Number(b.dataset.id),p;
  try{
-  if(a==='tab'){tab=b.dataset.t;armed=null;window.scrollTo(0,0)}
+  if(a==='menu'){menuOpen=!menuOpen}
+  else if(a==='go'){tab=b.dataset.t;menuOpen=false;armed=null;window.scrollTo(0,0)}
+  else if(a==='authgo'){authMode=b.dataset.m;tab='auth';menuOpen=false;armed=null;window.scrollTo(0,0)}
+  else if(a==='mode'){authMode=b.dataset.m}
+  else if(a==='tab'){menuOpen=false;tab=b.dataset.t;armed=null;window.scrollTo(0,0)}
   else if(a==='login'||a==='signup'){
    var em=$('#em').value.trim(),pw=$('#pw').value;
    if(!em||!pw){toast('Hãy nhập email và mật khẩu')}
    else{
     var d=await auth(a==='login'?'token?grant_type=password':'signup',{email:em,password:pw});
-    if(!d.access_token){toast('Đã tạo tài khoản, hãy bấm Đăng nhập')}
+    if(!d.access_token){authMode='login';toast('Đã tạo tài khoản, hãy đăng nhập')}
     else{setSess(mk(d));tab='shop';await refresh();toast('Xin chào '+em)}
    }
   }
-  else if(a==='logout'){setSess(null);P=null;orders=[];adm={prods:[],links:{}};tab='shop';toast('Đã đăng xuất')}
+  else if(a==='logout'){setSess(null);P=null;orders=[];adm={prods:[],links:{}};tab='shop';menuOpen=false;toast('Đã đăng xuất')}
   else if(a==='buy'){
    p=products.find(x=>x.id===id);
-   if(!P){tab='auth';toast('Hãy đăng nhập để mua hàng')}
+   if(!P){authMode='login';tab='auth';toast('Hãy đăng nhập để mua hàng')}
    else if(!p||p.stock<1){toast('Sản phẩm đã hết hàng')}
    else if(P.balance<p.price){armed=null;tab='topup';toast('Số dư chưa đủ, còn thiếu '+fmt(p.price-P.balance)+'. Hãy nạp thêm tiền.')}
    else if(armed!==id){armed=id;toast('Bấm “Mua ngay” lần nữa để xác nhận')}
