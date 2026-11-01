@@ -93,7 +93,7 @@ footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-fle
 <div class="wrap">
 <header>
   <div class="top">
-    <h1>Viete Sigma Shop<small>Tài liệu tải về ngay sau khi mua</small></h1>
+    <h1>Viete Sigma Shop<small>Shop Uy Tín Víp Pro</small></h1>
     <div class="acc"><button id="accbtn" class="accbtn" data-a="menu" aria-haspopup="true" aria-expanded="false"></button><div id="accmenu" class="accmenu" hidden></div></div>
   </div>
   <nav id="nav" role="tablist"></nav>
@@ -194,13 +194,13 @@ function vAdmin(){
  sec('add','Thêm sản phẩm mới','<div id="addf">'+fields()+'</div><div class="acts"><button class="btn" data-a="add">Thêm sản phẩm</button></div>')+
  sec('bank','Ngân hàng nhận tiền','<label>Ngân hàng<input id="bn" value="'+esc(c.bank_name)+'"></label><label>Số tài khoản<input id="bo" inputmode="numeric" value="'+esc(c.bank_no)+'"></label><label>Chủ tài khoản<input id="bw" value="'+esc(c.bank_owner)+'"></label><button class="btn" data-a="bank">Lưu ngân hàng</button>')+
  sec('info','Thông tin quản trị (chân trang)','<label>Giới thiệu shop<textarea id="ia">'+esc(c.shop_about)+'</textarea></label><label>Số Zalo<input id="iz" inputmode="tel" value="'+esc(c.contact_zalo)+'"></label><label>Link Facebook<input id="ifb" value="'+esc(c.contact_facebook)+'" placeholder="https://"></label><label>Email liên hệ<input id="ie" value="'+esc(c.contact_email)+'"></label><label>Giờ hỗ trợ<input id="ih" value="'+esc(c.contact_hours)+'"></label><button class="btn" data-a="info">Lưu thông tin</button>')}
-function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
+function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử mua hàng']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
 function render(){
  var T=tabs();if(tab==='auth'?!!P:!T.some(t=>t[0]===tab))tab='shop';
  var ab=$('#accbtn'),am=$('#accmenu');
  ab.innerHTML=P?'<b>'+fmt(P.balance)+'</b><span>▾</span>':'<span>Tài khoản ▾</span>';
  ab.setAttribute('aria-expanded',String(menuOpen));am.hidden=!menuOpen;
- am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Lịch sử</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
+ am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Lịch sử mua hàng</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
  $('#nav').innerHTML=T.map(t=>'<button role="tab" data-a="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>').join('');
  $('#app').innerHTML={shop:vShop,auth:vAuth,topup:vTopup,hist:vHist,admin:vAdmin}[tab]();
  var z=cfg.contact_zalo,fb=cfg.contact_facebook,em=cfg.contact_email;
@@ -239,11 +239,11 @@ document.addEventListener('click',async function(e){
    else if(!p||p.stock<1){toast('Sản phẩm đã hết hàng')}
    else if(P.balance<p.price){armed=null;tab='topup';toast('Số dư chưa đủ, còn thiếu '+fmt(p.price-P.balance)+'. Hãy nạp thêm tiền.')}
    else if(armed!==id){armed=id;toast('Bấm lần nữa để xác nhận mua')}
-   else{armed=null;await api('rpc/buy_product',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Mua thành công. Link tải nằm ở mục Lịch sử.')}
+   else{armed=null;await api('rpc/buy_product',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Mua thành công. Link tải nằm ở mục Lịch sử mua hàng.')}
   }
   else if(a==='claim'){
    if(!P){authMode='login';tab='auth';toast('Hãy đăng nhập để nhận tài liệu')}
-   else{await api('rpc/claim_free',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Đã nhận. Link tải nằm ở mục Lịch sử.')}
+   else{await api('rpc/claim_free',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Đã nhận. Link tải nằm ở mục Lịch sử mua hàng.')}
   }
   else if(a==='copy'){var o=orders.find(x=>x.id===id);try{await navigator.clipboard.writeText(o.link);toast('Đã sao chép link')}catch(x){toast('Không sao chép được, hãy bấm Mở link tải')}}
   else if(a==='copycode'){try{await navigator.clipboard.writeText(P.nap_code);toast('Đã sao chép nội dung chuyển khoản')}catch(x){toast('Hãy tự chép: '+P.nap_code)}}
