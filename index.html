@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Viet Esigma Shop</title>
+<title>Viete Sigma Shop</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap">
 <style>
 :root{--bg:#F1F4F9;--sf:#fff;--ink:#142033;--mu:#5B6B82;--ln:#DDE4EE;--ac:#2457D6;--acb:#fff;--ok:#1E8E5A;--er:#B42318;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root{--bg:#0F1724;--sf:#182234;--ink:#E8EEF7;--mu:#98A6BC;--ln:#2A3750;--ac:#6E94FF;--acb:#0F1724;--ok:#4FD08F;--er:#FF8A7A;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.45 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+html{height:100%}
+body{margin:0;min-height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:400 15px/1.45 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--sf);z-index:10}
-.wrap{max-width:680px;margin:0 auto}
+.wrap{max-width:680px;width:100%;margin:0 auto;flex:1}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sf);border-bottom:1px solid var(--ln);padding:10px 14px 0}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
 h1{margin:0;font-size:1.2rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
@@ -28,7 +29,7 @@ h1 small{display:block;font-size:.7rem;font-weight:400;color:var(--mu);letter-sp
 nav{display:flex;margin-top:4px;overflow-x:auto}
 nav button{flex:1;background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);font:500 .88rem "Be Vietnam Pro",system-ui,sans-serif;padding:8px 6px;min-height:44px;cursor:pointer;white-space:nowrap}
 nav button[aria-selected="true"]{color:var(--ink);border-color:var(--ac);font-weight:700}
-main{padding:14px;min-height:60vh}
+main{padding:14px}
 h2{font-size:1rem;margin:20px 0 8px}h2:first-child{margin-top:0}
 ul{list-style:none;margin:0;padding:0}
 button,input,select,textarea{font-family:inherit}
@@ -79,7 +80,7 @@ textarea{padding:10px 12px;min-height:80px}
 .row .plus{font-weight:800;color:var(--ok);white-space:nowrap}
 .row a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:8px;background:var(--ac);color:var(--acb);font-weight:700;font-size:.88rem;text-decoration:none}
 .empty{padding:28px 8px;text-align:center;color:var(--mu)}
-footer{max-width:680px;margin:0 auto;padding:18px 14px 28px;color:var(--mu);font-size:.82rem;border-top:1px solid var(--ln)}
+footer{width:100%;margin-top:auto;background:var(--sf);padding:18px max(14px,calc(50% - 326px)) 28px;color:var(--mu);font-size:.82rem;border-top:1px solid var(--ln)}
 footer b{color:var(--ink)}footer p{margin:6px 0}
 footer .ct{display:flex;flex-wrap:wrap;gap:8px 16px;margin:8px 0}
 footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
@@ -92,7 +93,7 @@ footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-fle
 <div class="wrap">
 <header>
   <div class="top">
-    <h1>Viet Esigma Shop<small>Tài liệu tải về ngay sau khi mua</small></h1>
+    <h1>Viete Sigma Shop<small>Tài liệu tải về ngay sau khi mua</small></h1>
     <div class="acc"><button id="accbtn" class="accbtn" data-a="menu" aria-haspopup="true" aria-expanded="false"></button><div id="accmenu" class="accmenu" hidden></div></div>
   </div>
   <nav id="nav" role="tablist"></nav>
@@ -203,7 +204,7 @@ function render(){
  $('#nav').innerHTML=T.map(t=>'<button role="tab" data-a="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>').join('');
  $('#app').innerHTML={shop:vShop,auth:vAuth,topup:vTopup,hist:vHist,admin:vAdmin}[tab]();
  var z=cfg.contact_zalo,fb=cfg.contact_facebook,em=cfg.contact_email;
- $('#foot').innerHTML='<b>Viet Esigma Shop</b>'+(cfg.shop_about?'<p>'+esc(cfg.shop_about)+'</p>':'')+((z||isUrl(fb)||em)?'<div class="ct">'+(z?'<a href="https://zalo.me/'+esc(z.replace(/\D/g,''))+'" target="_blank" rel="noopener noreferrer">Zalo '+esc(z)+'</a>':'')+(isUrl(fb)?'<a href="'+esc(fb)+'" target="_blank" rel="noopener noreferrer">Facebook</a>':'')+(em?'<a href="mailto:'+esc(em)+'">'+esc(em)+'</a>':'')+'</div>':'')+(cfg.contact_hours?'<p>'+esc(cfg.contact_hours)+'</p>':'')+'<p>© '+new Date().getFullYear()+' Viet Esigma Shop</p>';
+ $('#foot').innerHTML='<b>Viete Sigma Shop</b>'+(cfg.shop_about?'<p>'+esc(cfg.shop_about)+'</p>':'')+((z||isUrl(fb)||em)?'<div class="ct">'+(z?'<a href="https://zalo.me/'+esc(z.replace(/\D/g,''))+'" target="_blank" rel="noopener noreferrer">Zalo '+esc(z)+'</a>':'')+(isUrl(fb)?'<a href="'+esc(fb)+'" target="_blank" rel="noopener noreferrer">Facebook</a>':'')+(em?'<a href="mailto:'+esc(em)+'">'+esc(em)+'</a>':'')+'</div>':'')+(cfg.contact_hours?'<p>'+esc(cfg.contact_hours)+'</p>':'')+'<p>© '+new Date().getFullYear()+' Viete Sigma Shop</p>';
 }
 var num=id=>Math.max(0,Math.floor(Number($(id).value)||0));
 function collect(c){var v={};c.querySelectorAll('[data-f]').forEach(i=>v[i.dataset.f]=i.value.trim());v.is_free=v.is_free==='1';v.price=v.is_free?0:Math.max(0,Math.floor(Number(v.price)||0));v.stock=Math.max(0,Math.floor(Number(v.stock)||0));return v}
