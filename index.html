@@ -87,7 +87,13 @@ footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-fle
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:40}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){#toast{transition:none}}
+.qrw{display:flex;justify-content:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px}
+#qr img,#qr canvas{display:block}
+.kv{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--ln)}
+.kv small{display:block;color:var(--mu);font-size:.75rem}.kv b{word-break:break-all}
+.kv .alt{min-height:40px;padding:0 12px;font-size:.82rem;flex-shrink:0}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -174,12 +180,24 @@ function card(p){
 function vShop(){
  var nf=products.filter(p=>p.is_free).length,f=products.filter(p=>!!p.is_free===(kind==='free'));
  return '<div class="seg"><button data-a="kind" data-k="paid" aria-pressed="'+(kind==='paid')+'">Mất phí ('+(products.length-nf)+')</button><button data-a="kind" data-k="free" aria-pressed="'+(kind==='free')+'">Miễn phí ('+nf+')</button></div>'+(f.length?'<ul class="grid">'+f.map(card).join('')+'</ul>':'<div class="empty">Chưa có sản phẩm ở mục này.</div>')}
-var payAmt=0;
-function payBox(){return '<h2>Nạp tiền</h2><label>Số tiền muốn nạp (đ)<input id="pa" type="number" inputmode="numeric" min="10000" step="1000" placeholder="Từ 10.000đ" value="'+(payAmt||'')+'"></label><div class="acts">'+[20000,50000,100000,200000].map(n=>'<button class="alt" data-a="amt" data-n="'+n+'">'+fmt(n)+'</button>').join('')+'</div><div class="acts"><button class="btn" data-a="payos">Nạp qua payOS</button></div><p class="note">Bạn sẽ sang trang payOS để quét mã QR bằng app ngân hàng. Thanh toán xong sẽ tự quay lại shop và số dư tự cộng.</p>'}
+var payAmt=0,pay=null,payTimer=null;
+var BANKS={'970422':'MB Bank','970432':'VPBank','970436':'Vietcombank','970415':'VietinBank','970418':'BIDV','970405':'Agribank','970407':'Techcombank','970416':'ACB','970423':'TPBank','970403':'Sacombank','970448':'OCB','970437':'HDBank','970441':'VIB','970426':'MSB','970443':'SHB','970431':'Eximbank','970452':'KienlongBank','970440':'SeABank','970449':'LPBank'};
+function payBox(){return '<h2>Nạp tiền</h2><label>Số tiền muốn nạp (đ)<input id="pa" type="number" inputmode="numeric" min="10000" step="1000" placeholder="Từ 10.000đ" value="'+(payAmt||'')+'"></label><div class="acts">'+[20000,50000,100000,200000].map(n=>'<button class="alt" data-a="amt" data-n="'+n+'">'+fmt(n)+'</button>').join('')+'</div><div class="acts"><button class="btn" data-a="payos">Tạo mã nạp tiền</button><button class="alt" data-a="reload">Làm mới số dư</button></div><p class="note">Mã QR và thông tin chuyển khoản sẽ hiện ngay tại đây. Chuyển xong, số dư tự cộng sau vài giây.</p>'}
+function kv(l,v,c){return '<div class="kv"><div><small>'+l+'</small><b>'+esc(v)+'</b></div>'+(c?'<button class="alt" data-a="copyv" data-v="'+esc(c)+'">Chép</button>':'')+'</div>'}
+function payCard(){var p=pay,e=new Date(p.exp*1000);
+ return '<h2>Chuyển khoản nạp '+fmt(p.amount)+'</h2><div class="box"><div class="qrw"><div id="qr"></div></div><p class="note" style="text-align:center;margin-top:0">Quét mã bằng app ngân hàng, hoặc chuyển khoản theo thông tin bên dưới.</p>'+
+ kv('Ngân hàng',BANKS[p.bin]||('Mã ngân hàng '+p.bin))+kv('Số tài khoản',p.accountNumber,p.accountNumber)+kv('Chủ tài khoản',p.accountName)+kv('Số tiền',fmt(p.amount),String(p.amount))+kv('Nội dung chuyển khoản',p.description,p.description)+
+ '<div class="acts"><button class="alt" data-a="saveqr">Lưu ảnh QR</button><button class="alt" data-a="payclose">Đóng</button></div></div><p class="note">Mã có hiệu lực đến '+e.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})+'. Hãy chuyển đúng số tiền và nội dung. Thanh toán xong số dư tự cộng, không cần bấm gì.</p>'}
+function startPoll(){clearInterval(payTimer);payTimer=setInterval(async function(){
+ if(!pay){clearInterval(payTimer);return}
+ if(Date.now()>pay.exp*1000+30000){pay=null;clearInterval(payTimer);render();return}
+ if(busy)return;
+ await refresh();
+ if(pay&&topups.some(x=>(x.content||'').indexOf('#'+pay.orderCode)>-1)){pay=null;clearInterval(payTimer);toast('Nạp tiền thành công');render()}
+},4000)}
 function vTopup(){
  if(!P)return vAuth();
- return payBox()+'<details class="sec" data-sec="manual"'+(openSec.has('manual')?' open':'')+'><summary>Hoặc chuyển khoản trực tiếp</summary><div class="bd"><div class="box">'+(cfg.bank_no?'<dl><dt>Ngân hàng</dt><dd>'+esc(cfg.bank_name)+'</dd><dt>Số tài khoản</dt><dd>'+esc(cfg.bank_no)+'</dd><dt>Chủ tài khoản</dt><dd>'+esc(cfg.bank_owner)+'</dd><dt>Nội dung</dt><dd>'+esc(P.nap_code)+'</dd></dl>':'<p class="note" style="margin:0">Shop chưa cập nhật thông tin ngân hàng.</p>')+'</div><div class="acts"><button class="alt" data-a="copycode">Sao chép nội dung</button><button class="alt" data-a="reload">Làm mới số dư</button></div><p class="note">Chuyển khoản đúng nội dung ở trên để tiền vào đúng tài khoản của bạn. Chưa thấy tiền sau vài phút thì bấm Làm mới số dư.</p></div></details>'+
- '<h2>Lịch sử nạp tiền</h2>'+(topups.length?'<ul>'+topups.map(x=>'<li class="row"><div><h3>'+esc(x.content||'Nạp tiền')+'</h3><small>'+dt(x.created_at)+'</small></div><span class="plus">+'+fmt(x.amount)+'</span></li>').join('')+'</ul>':'<div class="empty">Chưa có giao dịch nạp tiền nào.</div>')}
+ return (pay?payCard():payBox())+'<h2>Lịch sử nạp tiền</h2>'+(topups.length?'<ul>'+topups.map(x=>'<li class="row"><div><h3>'+esc(x.content||'Nạp tiền')+'</h3><small>'+dt(x.created_at)+'</small></div><span class="plus">+'+fmt(x.amount)+'</span></li>').join('')+'</ul>':'<div class="empty">Chưa có giao dịch nạp tiền nào.</div>')}
 function vHist(){
  if(!P)return vAuth();
  if(!orders.length)return '<div class="empty">Bạn chưa mua hoặc nhận sản phẩm nào. Sản phẩm sẽ hiện ở đây kèm link tải.</div>';
@@ -194,7 +212,6 @@ function vAdmin(){
  sec('paid','Sản phẩm mất phí ('+pa.length+')','<ul>'+pa.map(prow).join('')+'</ul>')+
  sec('free','Sản phẩm miễn phí ('+fr.length+')','<ul>'+fr.map(prow).join('')+'</ul>')+
  sec('add','Thêm sản phẩm mới','<div id="addf">'+fields()+'</div><div class="acts"><button class="btn" data-a="add">Thêm sản phẩm</button></div>')+
- sec('bank','Ngân hàng nhận tiền','<label>Ngân hàng<input id="bn" value="'+esc(c.bank_name)+'"></label><label>Số tài khoản<input id="bo" inputmode="numeric" value="'+esc(c.bank_no)+'"></label><label>Chủ tài khoản<input id="bw" value="'+esc(c.bank_owner)+'"></label><button class="btn" data-a="bank">Lưu ngân hàng</button>')+
  sec('info','Thông tin quản trị (chân trang)','<label>Giới thiệu shop<textarea id="ia">'+esc(c.shop_about)+'</textarea></label><label>Số Zalo<input id="iz" inputmode="tel" value="'+esc(c.contact_zalo)+'"></label><label>Link Facebook<input id="ifb" value="'+esc(c.contact_facebook)+'" placeholder="https://"></label><label>Email liên hệ<input id="ie" value="'+esc(c.contact_email)+'"></label><label>Giờ hỗ trợ<input id="ih" value="'+esc(c.contact_hours)+'"></label><button class="btn" data-a="info">Lưu thông tin</button>')}
 function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
 function render(){
@@ -205,6 +222,7 @@ function render(){
  am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Lịch sử</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
  $('#nav').innerHTML=T.map(t=>'<button role="tab" data-a="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>').join('');
  $('#app').innerHTML={shop:vShop,auth:vAuth,topup:vTopup,hist:vHist,admin:vAdmin}[tab]();
+ if(tab==='topup'&&pay&&window.QRCode){var qe=$('#qr');if(qe){qe.innerHTML='';new QRCode(qe,{text:pay.qrCode,width:220,height:220,correctLevel:QRCode.CorrectLevel.M})}}
  var z=cfg.contact_zalo,fb=cfg.contact_facebook,em=cfg.contact_email;
  $('#foot').innerHTML='<b>Viet Esigma Shop</b>'+(cfg.shop_about?'<p>'+esc(cfg.shop_about)+'</p>':'')+((z||isUrl(fb)||em)?'<div class="ct">'+(z?'<a href="https://zalo.me/'+esc(z.replace(/\D/g,''))+'" target="_blank" rel="noopener noreferrer">Zalo '+esc(z)+'</a>':'')+(isUrl(fb)?'<a href="'+esc(fb)+'" target="_blank" rel="noopener noreferrer">Facebook</a>':'')+(em?'<a href="mailto:'+esc(em)+'">'+esc(em)+'</a>':'')+'</div>':'')+(cfg.contact_hours?'<p>'+esc(cfg.contact_hours)+'</p>':'')+'<p>© '+new Date().getFullYear()+' Viet Esigma Shop</p>';
 }
@@ -256,9 +274,13 @@ document.addEventListener('click',async function(e){
     var pr=await fetch(API+'/functions/v1/payos-create',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'},body:JSON.stringify({amount:am,return_url:location.origin+location.pathname})});
     var pd={};try{pd=await pr.json()}catch(x){}
     if(!pr.ok||!pd.checkoutUrl)throw new Error(pd.error||'Không tạo được link thanh toán');
-    toast('Đang chuyển sang payOS…');location.href=pd.checkoutUrl;
+    if(pd.qrCode&&pd.accountNumber){pay={orderCode:pd.orderCode,amount:pd.amount||am,description:pd.description,accountNumber:pd.accountNumber,accountName:pd.accountName,bin:pd.bin,qrCode:pd.qrCode,exp:Math.floor(Date.now()/1000)+900};startPoll();toast('Đã tạo mã nạp tiền')}
+    else{toast('Đang chuyển sang payOS…');location.href=pd.checkoutUrl}
    }
   }
+  else if(a==='copyv'){try{await navigator.clipboard.writeText(b.dataset.v);toast('Đã chép')}catch(x){toast('Không chép được, hãy giữ chữ để chép tay')}}
+  else if(a==='saveqr'){var cv=$('#qr canvas'),qu=cv?cv.toDataURL('image/png'):(($('#qr img')||{}).src);if(qu){var lk=document.createElement('a');lk.href=qu;lk.download='qr-nap-tien.png';document.body.appendChild(lk);lk.click();lk.remove();toast('Đã lưu ảnh. Mở app ngân hàng, chọn quét mã từ thư viện ảnh.')}else{toast('Chưa lưu được ảnh QR')}}
+  else if(a==='payclose'){pay=null;clearInterval(payTimer)}
   else if(a==='copy'){var o=orders.find(x=>x.id===id);try{await navigator.clipboard.writeText(o.link);toast('Đã sao chép link')}catch(x){toast('Không sao chép được, hãy bấm Mở link tải')}}
   else if(a==='copycode'){try{await navigator.clipboard.writeText(P.nap_code);toast('Đã sao chép nội dung chuyển khoản')}catch(x){toast('Hãy tự chép: '+P.nap_code)}}
   else if(a==='reload'){await refresh();toast('Đã làm mới')}
