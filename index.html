@@ -6,93 +6,103 @@
 <title>Viet Esigma Shop</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap">
 <style>
-:root{--bg:#F1F4F9;--sf:#fff;--ink:#142033;--mu:#5B6B82;--ln:#DDE4EE;--ac:#2457D6;--acb:#fff;--ok:#1E8E5A;--er:#B42318;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root{--bg:#0F1724;--sf:#182234;--ink:#E8EEF7;--mu:#98A6BC;--ln:#2A3750;--ac:#6E94FF;--acb:#0F1724;--ok:#4FD08F;--er:#FF8A7A;color-scheme:dark}}
+:root{--bg:#F4F6FB;--sf:#fff;--sf2:#F8FAFD;--ink:#0F1B33;--mu:#66748B;--ln:#E3E8F1;--ac:#2D5BE3;--acb:#fff;--acs:#E8EEFD;--ok:#13875A;--oks:#E4F5EC;--er:#C0362C;--sh:0 1px 2px rgba(15,27,51,.06),0 4px 14px rgba(15,27,51,.06);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1220;--sf:#131C2E;--sf2:#18233A;--ink:#E7EDF8;--mu:#93A1BB;--ln:#243049;--ac:#6F93FF;--acb:#0B1220;--acs:#1B2A4D;--ok:#4FD08F;--oks:#12301F;--er:#FF8A7A;--sh:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);color-scheme:dark}}
 *{box-sizing:border-box}
 html{height:100%}
-body{margin:0;min-height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:400 15px/1.45 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;min-height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:400 15px/1.45 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--sf);z-index:10}
 .wrap{max-width:680px;width:100%;margin:0 auto;flex:1}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sf);border-bottom:1px solid var(--ln);padding:10px 14px 0}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-h1{margin:0;font-size:1.2rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
-h1 small{display:block;font-size:.7rem;font-weight:400;color:var(--mu);letter-spacing:0}
+h1{margin:0;display:flex;align-items:center;font-size:1.05rem;font-weight:800;letter-spacing:-.01em;line-height:1.15;min-width:0}
+h1 small{display:block;font-size:.68rem;font-weight:400;color:var(--mu);letter-spacing:0}
+.logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--ac),#7C9BFF);color:var(--acb);font-weight:800;margin-right:10px;flex-shrink:0}
 .acc{position:relative;flex-shrink:0}
-.accbtn{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;background:none;border:1px solid var(--ln);border-radius:22px;color:var(--ink);font:700 .85rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;max-width:190px;white-space:nowrap}
+.accbtn{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;background:var(--sf2);border:1px solid var(--ln);border-radius:999px;color:var(--ink);font:700 .84rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;max-width:190px;white-space:nowrap}
 .accbtn b{color:var(--ok)}
-.accmenu{position:absolute;right:0;top:calc(100% + 6px);min-width:220px;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:30}
+.accmenu{position:absolute;right:0;top:calc(100% + 6px);min-width:220px;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:6px;box-shadow:0 12px 32px rgba(15,27,51,.22);z-index:30}
 .accmenu[hidden]{display:none}
-.mi{display:block;width:100%;text-align:left;background:none;border:0;border-radius:8px;min-height:44px;padding:0 12px;color:var(--ink);font:500 .95rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.mi{display:block;width:100%;text-align:left;background:none;border:0;border-radius:10px;min-height:44px;padding:0 12px;color:var(--ink);font:500 .92rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
 .mi:hover{background:var(--bg)}.mi.out{color:var(--er)}
-.mt{padding:8px 12px;color:var(--mu);font-size:.8rem;word-break:break-all}
+.mt{padding:8px 12px 10px;color:var(--mu);font-size:.78rem;word-break:break-all;border-bottom:1px solid var(--ln);margin-bottom:4px}
 .mt b{display:block;color:var(--ok);font-size:1.05rem}
-nav{display:flex;margin-top:4px;overflow-x:auto}
-nav button{flex:1;background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);font:500 .88rem "Be Vietnam Pro",system-ui,sans-serif;padding:8px 6px;min-height:44px;cursor:pointer;white-space:nowrap}
-nav button[aria-selected="true"]{color:var(--ink);border-color:var(--ac);font-weight:700}
-main{padding:14px}
-h2{font-size:1rem;margin:20px 0 8px}h2:first-child{margin-top:0}
+nav{display:flex;gap:6px;margin-top:8px;padding-bottom:10px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;background:none;border:0;border-radius:999px;color:var(--mu);font:600 .86rem "Be Vietnam Pro",system-ui,sans-serif;padding:0 16px;min-height:40px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{background:var(--acs);color:var(--ac)}
+main{padding:14px 14px 22px}
+h2{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);font-weight:700;margin:22px 0 8px}h2:first-child{margin-top:0}
 ul{list-style:none;margin:0;padding:0}
+main>ul:not(.grid){background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:0 14px;box-shadow:var(--sh)}
 button,input,select,textarea{font-family:inherit}
-.seg{display:flex;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:3px;margin-bottom:12px}
-.seg button{flex:1;min-height:40px;border:0;border-radius:9px;background:none;color:var(--mu);font:600 .86rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.seg{display:flex;background:var(--sf);border:1px solid var(--ln);border-radius:999px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;min-height:40px;border:0;border-radius:999px;background:none;color:var(--mu);font:600 .86rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--ac);color:var(--acb)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
-.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
-.im{aspect-ratio:4/3;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:2rem}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.im{aspect-ratio:16/10;background:linear-gradient(135deg,var(--acs),var(--sf2));color:var(--ac);display:flex;align-items:center;justify-content:center}
+.im svg{opacity:.55}
 .im img{width:100%;height:100%;object-fit:cover;display:block}
-.cb{padding:10px;display:flex;flex-direction:column;gap:3px;flex:1}
-.cb h3{margin:0;font-size:.9rem;line-height:1.3}
+.cb{padding:10px 11px 11px;display:flex;flex-direction:column;gap:3px;flex:1}
+.cb h3{margin:0;font-size:.88rem;font-weight:700;line-height:1.3}
 .cb h3,.cb p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.cb p{margin:0;color:var(--mu);font-size:.78rem}
-.meta{font-size:.72rem;color:var(--mu)}
+.cb p{margin:0;color:var(--mu);font-size:.76rem;line-height:1.35}
+.meta{font-size:.7rem;color:var(--mu)}
 .foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:6px}
-.pr{font-weight:800;font-size:.95rem}.pr.fr{color:var(--ok)}
-.cart{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 12px;border:0;border-radius:22px;background:var(--ac);color:var(--acb);font:700 .82rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.pr{font-weight:800;font-size:.95rem;letter-spacing:-.01em}.pr.fr{color:var(--ok)}
+.cart{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:var(--ac);color:var(--acb);font:700 .8rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
 .cart.armed{background:var(--ok);color:#fff}
-.btn,.ad .acts button{background:var(--ac);color:var(--acb);border:0;border-radius:8px;min-height:44px;padding:0 16px;font-weight:700;font-size:.9rem;cursor:pointer}
-.alt,.ghost,.up{display:inline-flex;align-items:center;background:none;color:var(--ink);border:1px solid var(--ln);border-radius:8px;min-height:44px;padding:0 16px;font-weight:500;font-size:.9rem;cursor:pointer;margin:0}
-.ad .acts .ghost{background:none;color:var(--er);border:1px solid var(--ln)}
+.btn,.ad .acts button{background:var(--ac);color:var(--acb);border:0;border-radius:10px;min-height:44px;padding:0 18px;font-weight:700;font-size:.9rem;cursor:pointer}
+.alt,.ghost,.up{display:inline-flex;align-items:center;background:var(--sf);color:var(--ink);border:1px solid var(--ln);border-radius:10px;min-height:44px;padding:0 16px;font-weight:600;font-size:.88rem;cursor:pointer;margin:0}
+.ad .acts .ghost{background:var(--sf);color:var(--er);border:1px solid var(--ln)}
 button:disabled{opacity:.4;cursor:not-allowed}
 :focus-visible{outline:3px solid var(--ac);outline-offset:2px}
-.box{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px}
+.box{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;box-shadow:var(--sh)}
 .box dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
-.box dt{color:var(--mu);font-size:.85rem}.box dd{margin:0;font-weight:700;word-break:break-all}
-.note{color:var(--mu);font-size:.82rem;margin:8px 0}
-label{display:block;font-size:.78rem;color:var(--mu);margin-bottom:8px}
-input,select,textarea{display:block;width:100%;min-height:44px;margin-top:3px;padding:0 12px;border:1px solid var(--ln);border-radius:8px;background:var(--sf);color:var(--ink);font:inherit;font-size:.95rem}
+.box dt{color:var(--mu);font-size:.82rem}.box dd{margin:0;font-weight:700;word-break:break-all}
+.note{color:var(--mu);font-size:.8rem;margin:8px 0}
+label{display:block;font-size:.76rem;font-weight:600;color:var(--mu);margin-bottom:10px}
+input,select,textarea{display:block;width:100%;min-height:44px;margin-top:4px;padding:0 12px;border:1px solid var(--ln);border-radius:10px;background:var(--sf2);color:var(--ink);font:inherit;font-size:.95rem;font-weight:400}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--acs)}
 textarea{padding:10px 12px;min-height:80px}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.sec{background:var(--sf);border:1px solid var(--ln);border-radius:12px;margin-bottom:10px}
-.sec>summary{padding:12px 14px;font-weight:700;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.sec{background:var(--sf);border:1px solid var(--ln);border-radius:14px;margin-bottom:10px;box-shadow:var(--sh)}
+.sec>summary{padding:12px 14px;font-weight:700;cursor:pointer;min-height:48px;display:flex;align-items:center;list-style:none}
+.sec>summary::-webkit-details-marker{display:none}
+.sec>summary::after{content:"›";margin-left:auto;color:var(--mu);font-size:1.4rem;transform:rotate(90deg);transition:transform .15s}
+.sec[open]>summary::after{transform:rotate(-90deg)}
 .bd{padding:0 14px 14px}
 .ad{border-top:1px solid var(--ln)}
 .ps{display:flex;gap:10px;align-items:center;padding:10px 0;cursor:pointer;min-height:44px}
-.ps small{display:block;color:var(--mu);font-size:.75rem}
-.th{width:44px;height:44px;border-radius:8px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ps small{display:block;color:var(--mu);font-size:.74rem}
+.th{width:44px;height:44px;border-radius:10px;background:var(--acs);color:var(--ac);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.th svg{width:22px;height:22px}
 .th img{width:100%;height:100%;object-fit:cover}
 .g{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.g .w{grid-column:1/-1}
 .imgbox{display:flex;align-items:center;gap:10px;margin-bottom:4px}
-.imgbox img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+.imgbox img{width:64px;height:64px;object-fit:cover;border-radius:10px}
 .imgbox img[hidden]{display:none}
 .row{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--ln)}
-.row h3{margin:0;font-size:.95rem;word-break:break-word}.row small{color:var(--mu)}
-.row .plus{font-weight:800;color:var(--ok);white-space:nowrap}
-.row a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:8px;background:var(--ac);color:var(--acb);font-weight:700;font-size:.88rem;text-decoration:none}
-.empty{padding:28px 8px;text-align:center;color:var(--mu)}
-footer{width:100%;margin-top:auto;background:var(--sf);padding:18px max(14px,calc(50% - 326px)) 28px;color:var(--mu);font-size:.82rem;border-top:1px solid var(--ln)}
-footer b{color:var(--ink)}footer p{margin:6px 0}
-footer .ct{display:flex;flex-wrap:wrap;gap:8px 16px;margin:8px 0}
-footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:40}
-#toast.on{opacity:1;transform:translate(-50%,0)}
-@media (prefers-reduced-motion:reduce){#toast{transition:none}}
-.lnk{display:block;background:none;border:0;padding:0;min-height:36px;text-align:left;color:var(--ac);font:600 .75rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
+.row:last-child{border-bottom:0}
+.row h3{margin:0;font-size:.92rem;font-weight:600;word-break:break-word}.row small{color:var(--mu);font-size:.76rem}
+.row .plus{font-weight:800;color:var(--ok);white-space:nowrap;align-self:center}
+.row a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:10px;background:var(--ac);color:var(--acb);font-weight:700;font-size:.88rem;text-decoration:none}
+.empty{padding:36px 8px;text-align:center;color:var(--mu);font-size:.9rem}
+.lnk{display:block;background:none;border:0;padding:0;min-height:36px;text-align:left;color:var(--ac);font:600 .74rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
 .qrw{display:flex;justify-content:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px}
 #qr img,#qr canvas{display:block}
 .kv{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--ln)}
-.kv small{display:block;color:var(--mu);font-size:.75rem}.kv b{word-break:break-all}
-.kv .alt{min-height:40px;padding:0 12px;font-size:.82rem;flex-shrink:0}
+.kv small{display:block;color:var(--mu);font-size:.74rem}.kv b{word-break:break-all}
+.kv .alt{min-height:40px;padding:0 12px;font-size:.8rem;flex-shrink:0}
+footer{width:100%;margin-top:auto;background:var(--sf);padding:20px max(14px,calc(50% - 326px)) 26px;color:var(--mu);font-size:.8rem;border-top:1px solid var(--ln)}
+footer b{color:var(--ink);font-size:.9rem}footer p{margin:6px 0}
+footer .ct{display:flex;flex-wrap:wrap;gap:0 18px;margin:6px 0}
+footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-size:.88rem;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:40;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){#toast,.sec>summary::after{transition:none}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
@@ -100,7 +110,7 @@ footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-fle
 <div class="wrap">
 <header>
   <div class="top">
-    <h1>Viet Esigma Shop<small>Tài liệu tải về ngay sau khi mua</small></h1>
+    <h1><span class="logo">V</span><span>Viet Esigma Shop<small>Tài liệu tải về ngay sau khi mua</small></span></h1>
     <div class="acc"><button id="accbtn" class="accbtn" data-a="menu" aria-haspopup="true" aria-expanded="false"></button><div id="accmenu" class="accmenu" hidden></div></div>
   </div>
   <nav id="nav" role="tablist"></nav>
@@ -111,7 +121,7 @@ footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-fle
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 var API='https://jjwlazyhanjrzvikajxh.supabase.co',KEY='sb_publishable_9bRwAIKYvcXzrgxXXUVVmw_4T8ib5ha',SK='ves_session';
-var sess=null,P=null,products=[],orders=[],topups=[],cfg={},shorts=[],adm={prods:[],links:{}},tab='shop',kind='paid',authMode='login',menuOpen=false,armed=null,busy=false,tt,openSec=new Set();
+var sess=null,P=null,products=[],orders=[],topups=[],cfg={},adm={prods:[],links:{}},tab='shop',kind='paid',authMode='login',menuOpen=false,armed=null,busy=false,tt,openSec=new Set();
 try{sess=JSON.parse(localStorage.getItem(SK))}catch(e){}
 var $=s=>document.querySelector(s);
 var fmt=n=>new Intl.NumberFormat('vi-VN').format(n||0)+'đ';
@@ -119,6 +129,7 @@ var dt=s=>new Date(s).toLocaleString('vi-VN',{dateStyle:'short',timeStyle:'short
 var esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 var isUrl=u=>/^https?:\/\//i.test(u);
 var safe=u=>isUrl(u)?u:'#';
+var DOC='<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>';
 var CART='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg>';
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),Math.max(2800,m.length*50))}
 function vi(m){m=String(m);
@@ -164,7 +175,6 @@ async function refresh(){
    if(P&&P.is_admin){
     adm.prods=await api('products?select=*&order=id');
     var l=await api('product_secrets?select=product_id,link');adm.links={};l.forEach(x=>adm.links[x.product_id]=x.link);
-    try{shorts=await api('shorteners?select=id,name,api_url&order=id')}catch(e){shorts=[]}
    }
   }else{P=null;orders=[];topups=[]}
  }catch(e){
@@ -178,7 +188,7 @@ function vAuth(){var s=authMode==='signup';return '<h2>'+(s?'Đăng ký tài kho
 function card(p){
  var free=kind==='free',out=!free&&p.stock<1,a=armed===p.id;
  var btn=free?'<button class="cart" data-a="claim" data-id="'+p.id+'">Vượt link</button>':'<button class="cart'+(a?' armed':'')+'" data-a="buy" data-id="'+p.id+'" aria-label="'+(a?'Xác nhận mua':'Mua '+esc(p.name))+'"'+(out?' disabled':'')+'>'+(a?'Xác nhận':CART)+'</button>';
- return '<li class="card"><div class="im">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="" loading="lazy">':'📄')+'</div><div class="cb"><h3>'+esc(p.name)+'</h3><p>'+esc(p.description)+'</p><span class="meta">'+(free?'Đã nhận '+(p.free_count||0)+' lượt':'Đã bán '+(p.sold||0)+' lượt · '+(out?'Hết hàng':'Còn '+p.stock))+'</span>'+(free&&p.price>0?'<button class="lnk" data-a="kind" data-k="paid">Mua '+fmt(p.price)+' để khỏi vượt link</button>':'')+(!free&&p.free_link?'<button class="lnk" data-a="kind" data-k="free">Có bản miễn phí (vượt link)</button>':'')+'<div class="foot"><span class="pr'+(free?' fr':'')+'">'+(free?'Miễn phí':fmt(p.price))+'</span>'+btn+'</div></div></li>'}
+ return '<li class="card"><div class="im">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="" loading="lazy">':DOC)+'</div><div class="cb"><h3>'+esc(p.name)+'</h3><p>'+esc(p.description)+'</p><span class="meta">'+(free?'Đã nhận '+(p.free_count||0)+' lượt':'Đã bán '+(p.sold||0)+' lượt · '+(out?'Hết hàng':'Còn '+p.stock))+'</span>'+(free&&p.price>0?'<button class="lnk" data-a="kind" data-k="paid">Mua '+fmt(p.price)+' để khỏi vượt link</button>':'')+(!free&&p.free_link?'<button class="lnk" data-a="kind" data-k="free">Có bản miễn phí (vượt link)</button>':'')+'<div class="foot"><span class="pr'+(free?' fr':'')+'">'+(free?'Miễn phí':fmt(p.price))+'</span>'+btn+'</div></div></li>'}
 function vShop(){
  var pa=products.filter(p=>p.price>0),fr=products.filter(p=>p.free_link),f=kind==='free'?fr:pa;
  return '<div class="seg"><button data-a="kind" data-k="paid" aria-pressed="'+(kind==='paid')+'">Mất phí ('+pa.length+')</button><button data-a="kind" data-k="free" aria-pressed="'+(kind==='free')+'">Miễn phí ('+fr.length+')</button></div>'+(kind==='free'?'<p class="note" style="margin-top:0">Sản phẩm miễn phí cần vượt link để nhận. Không muốn vượt link thì mua ở mục Mất phí, bạn nhận link gốc ngay.</p>':'')+(f.length?'<ul class="grid">'+f.map(card).join('')+'</ul>':'<div class="empty">Chưa có sản phẩm ở mục này.</div>')}
@@ -204,17 +214,15 @@ function vHist(){
  if(!P)return vAuth();
  if(!orders.length)return '<div class="empty">Bạn chưa mua hoặc nhận sản phẩm nào. Sản phẩm sẽ hiện ở đây kèm link tải.</div>';
  return '<ul>'+orders.map(x=>'<li class="row" style="display:block"><h3>'+esc(x.product_name)+'</h3><small>'+dt(x.created_at)+' · '+(x.price?fmt(x.price):'Miễn phí')+'</small><div class="acts"><a href="'+esc(safe(x.link))+'" target="_blank" rel="noopener noreferrer">Mở link tải</a><button class="alt" data-a="copy" data-id="'+x.id+'">Sao chép link</button></div></li>').join('')+'</ul>'}
-function sopts(sel){return shorts.map(x=>'<option value="'+x.id+'"'+(String(sel)===String(x.id)?' selected':'')+'>'+esc(x.name)+'</option>').join('')||'<option value="">(chưa có dịch vụ)</option>'}
-function fields(p){p=p||{};var s1=shorts[0]?shorts[0].id:'',s2=shorts[1]?shorts[1].id:s1;return '<div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Giới thiệu<input data-f="description" value="'+esc(p.description)+'"></label><label class="w">Link gốc (chưa rút gọn), khách mua nhận link này<input data-f="link" value="'+esc(adm.links[p.id]||'')+'" placeholder="https://"></label><label>Bản miễn phí (vượt link)<select data-f="layers">'+'<option value="keep"'+(p.free_link?' selected':'')+'>Giữ / tự dán link vượt (ô dưới)</option><option value="0"'+(p.free_link?'':' selected')+'>Không có bản miễn phí</option><option value="1">Rút gọn 1 lần</option><option value="2">Rút gọn 2 lần</option></select></label><label>Giá bán (đ), 0 là không bán<input data-f="price" type="number" inputmode="numeric" value="'+(p.price||0)+'"></label><label>Lần 1 dùng<select data-f="s1">'+sopts(s1)+'</select></label><label>Lần 2 dùng<select data-f="s2">'+sopts(s2)+'</select></label><label>Số lượng bán<input data-f="stock" type="number" inputmode="numeric" value="'+(p.stock||0)+'"></label><label class="w">Link vượt (tự tạo khi chọn Rút gọn, hoặc tự dán vào đây)<input data-f="free_link" placeholder="https://" value="'+esc(p.free_link||'')+'"></label></div><div class="imgbox"><img '+(p.image_url?'src="'+esc(safe(p.image_url))+'"':'hidden')+' alt=""><input type="hidden" data-f="image_url" value="'+esc(p.image_url||'')+'"><label class="up">Chọn ảnh<input type="file" accept="image/*" hidden></label></div>'}
+function fields(p){p=p||{};return '<div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Giới thiệu<input data-f="description" value="'+esc(p.description)+'"></label><label class="w">Link gốc (khách mua nhận link này)<input data-f="link" value="'+esc(adm.links[p.id]||'')+'" placeholder="https://"></label><label class="w">Link vượt (bản miễn phí, tự dán link đã rút gọn; để trống nếu không có)<input data-f="free_link" value="'+esc(p.free_link||'')+'" placeholder="https://"></label><label>Giá bán (đ), 0 là không bán<input data-f="price" type="number" inputmode="numeric" value="'+(p.price||0)+'"></label><label>Số lượng bán<input data-f="stock" type="number" inputmode="numeric" value="'+(p.stock||0)+'"></label></div><div class="imgbox"><img '+(p.image_url?'src="'+esc(safe(p.image_url))+'"':'hidden')+' alt=""><input type="hidden" data-f="image_url" value="'+esc(p.image_url||'')+'"><label class="up">Chọn ảnh<input type="file" accept="image/*" hidden></label></div>'}
 function sec(k,t,body){return '<details class="sec" data-sec="'+k+'"'+(openSec.has(k)?' open':'')+'><summary>'+t+'</summary><div class="bd">'+body+'</div></details>'}
-function prow(p){return '<li class="ad" data-id="'+p.id+'"><details data-sec="p'+p.id+'"'+(openSec.has('p'+p.id)?' open':'')+'><summary class="ps"><span class="th">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="">':'📄')+'</span><span><b>'+esc(p.name)+'</b><small>'+(p.price>0?'Mất phí '+fmt(p.price)+' · còn '+p.stock+' · bán '+(p.sold||0):'')+(p.price>0&&p.free_link?' | ':'')+(p.free_link?'Miễn phí · nhận '+(p.free_count||0):'')+'</small></span></summary>'+fields(p)+'<div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></details></li>'}
+function prow(p){return '<li class="ad" data-id="'+p.id+'"><details data-sec="p'+p.id+'"'+(openSec.has('p'+p.id)?' open':'')+'><summary class="ps"><span class="th">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="">':DOC)+'</span><span><b>'+esc(p.name)+'</b><small>'+(p.price>0?'Mất phí '+fmt(p.price)+' · còn '+p.stock+' · bán '+(p.sold||0):'')+(p.price>0&&p.free_link?' | ':'')+(p.free_link?'Miễn phí · nhận '+(p.free_count||0):'')+'</small></span></summary>'+fields(p)+'<div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></details></li>'}
 function vAdmin(){
  if(!P||!P.is_admin)return vShop();
  var c=cfg;
  return sec('credit','Cộng tiền cho khách','<label>Email của khách<input id="cu" type="email" autocapitalize="none"></label><label>Số tiền (đ)<input id="ca" type="number" inputmode="numeric" min="1"></label><button class="btn" data-a="credit">Cộng tiền</button>')+
- sec('prods','Sản phẩm ('+adm.prods.length+')','<p class="note" style="margin-top:0">Sản phẩm có Link gốc sẽ vào mục Miễn phí, có giá bán sẽ vào mục Mất phí. Có cả hai thì vào cả hai mục.</p><ul>'+adm.prods.map(prow).join('')+'</ul>')+
+ sec('prods','Sản phẩm ('+adm.prods.length+')','<p class="note" style="margin-top:0">Sản phẩm có Link vượt sẽ vào mục Miễn phí, có giá bán sẽ vào mục Mất phí. Có cả hai thì vào cả hai mục.</p><ul>'+adm.prods.map(prow).join('')+'</ul>')+
  sec('add','Thêm sản phẩm mới','<div id="addf">'+fields()+'</div><div class="acts"><button class="btn" data-a="add">Thêm sản phẩm</button></div>')+
- sec('short','Dịch vụ rút gọn link ('+shorts.length+')','<p class="note" style="margin-top:0">Dán địa chỉ API của dịch vụ, thay token bằng {token} và link cần rút gọn bằng {url}. Ví dụ: https://ten-mien/api?api={token}&amp;url={url}</p><ul>'+shorts.map(x=>'<li class="kv"><div><b>'+esc(x.name)+'</b><small>'+esc(x.api_url)+'</small></div><button class="alt" data-a="sdel" data-id="'+x.id+'">Xoá</button></li>').join('')+'</ul><label>Tên dịch vụ<input id="sn"></label><label>Địa chỉ API (có {url}, thường có {token})<input id="su" placeholder="https://.../api?api={token}&amp;url={url}"></label><label>API token<input id="st" type="password" autocomplete="off"></label><button class="btn" data-a="sadd">Thêm dịch vụ</button>')+
  sec('info','Thông tin quản trị (chân trang)','<label>Giới thiệu shop<textarea id="ia">'+esc(c.shop_about)+'</textarea></label><label>Số Zalo<input id="iz" inputmode="tel" value="'+esc(c.contact_zalo)+'"></label><label>Link Facebook<input id="ifb" value="'+esc(c.contact_facebook)+'" placeholder="https://"></label><label>Email liên hệ<input id="ie" value="'+esc(c.contact_email)+'"></label><label>Giờ hỗ trợ<input id="ih" value="'+esc(c.contact_hours)+'"></label><button class="btn" data-a="info">Lưu thông tin</button>')}
 function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
 function render(){
@@ -233,48 +241,19 @@ var num=id=>Math.max(0,Math.floor(Number($(id).value)||0));
 function collect(c){var v={};c.querySelectorAll('[data-f]').forEach(i=>v[i.dataset.f]=i.value.trim());v.price=Math.max(0,Math.floor(Number(v.price)||0));v.stock=Math.max(0,Math.floor(Number(v.stock)||0));return v}
 function pbody(v){return{name:v.name,description:v.description,price:v.price,stock:v.stock,is_free:false,image_url:v.image_url||null,free_link:v.free_link||null}}
 function chk(v){
- var L=v.layers||'0',has=L==='keep'?!!v.free_link:L!=='0';
  if(!v.name)return 'Cần có tên sản phẩm';
  if(v.link&&!isUrl(v.link))return 'Link gốc phải bắt đầu bằng https://';
- if((v.price>0||L==='1'||L==='2')&&!v.link)return 'Cần nhập Link gốc (chưa rút gọn)';
- if(L==='keep'&&v.free_link&&!isUrl(v.free_link))return 'Link vượt phải bắt đầu bằng https://';
- if(!has&&!(v.price>0))return 'Cần đặt giá bán hoặc chọn bản miễn phí vượt link';
+ if(v.free_link&&!isUrl(v.free_link))return 'Link vượt phải bắt đầu bằng https://';
+ if(v.price>0&&!v.link)return 'Sản phẩm có giá bán cần nhập Link gốc';
+ if(!v.free_link&&!(v.price>0))return 'Cần dán Link vượt (bản miễn phí) hoặc đặt giá bán';
  return ''}
-async function viaBrowser(ids,url){
- var link=url;
- for(var i=0;i<ids.length;i++){
-  var rows=await api('shorteners?select=name,api_url,token&id=eq.'+ids[i]),sv=rows[0];
-  if(!sv)throw new Error('Không tìm thấy dịch vụ rút gọn');
-  var r=await fetch(sv.api_url.replace('{token}',encodeURIComponent(sv.token)).replace('{url}',encodeURIComponent(link)));
-  var t=(await r.text()).trim(),out='';
-  try{var j=JSON.parse(t);out=j.shortenedUrl||j.short_url||j.html||j.url||j.link||''}catch(x){out=t}
-  if(!/^https?:\/\/\S+$/.test(out))throw new Error(sv.name+': '+t.slice(0,100));
-  link=out}
- return link}
-async function mkFree(v){
- var L=v.layers||'0';
- if(L==='keep')return v.free_link||null;
- if(L!=='1'&&L!=='2')return null;
- var ids=[Number(v.s1)];if(L==='2')ids.push(Number(v.s2||v.s1));
- if(!ids[0])throw new Error('Hãy thêm dịch vụ rút gọn link trước (mục Dịch vụ rút gọn link)');
- toast('Đang tạo link rút gọn…');await fresh();
- var msg='';
- try{
-  var r=await fetch(API+'/functions/v1/shorten',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'},body:JSON.stringify({url:v.link,providers:ids})});
-  var d={};try{d=await r.json()}catch(x){}
-  if(r.ok&&d.link)return d.link;
-  msg=d.error||'Không tạo được link rút gọn'
- }catch(x){msg=x.message}
- try{toast('Máy chủ bị chặn, đang thử từ trình duyệt…');return await viaBrowser(ids,v.link)}
- catch(x){throw new Error(msg+' | '+(/Failed to fetch/i.test(x.message)?'Trình duyệt cũng không gọi được. Hãy tự tạo link rồi dán vào ô Link vượt, chọn "Giữ / tự dán link vượt".':x.message))}
-}
 
 document.addEventListener('click',async function(e){
  var b=e.target.closest('[data-a]');
  if(!b){if(menuOpen&&!e.target.closest('.acc')){menuOpen=false;render()}return}
  if(busy)return;
  busy=true;
- var a=b.dataset.a,id=Number(b.dataset.id),p;
+ var a=b.dataset.a,id=Number(b.dataset.id),p,skip=false;
  try{
   if(a==='menu'){menuOpen=!menuOpen}
   else if(a==='go'){tab=b.dataset.t;menuOpen=false;armed=null;window.scrollTo(0,0)}
@@ -338,32 +317,24 @@ document.addEventListener('click',async function(e){
    var v=collect(b.closest('li')),er=chk(v);
    if(er){toast(er)}
    else{
-    v.free_link=await mkFree(v);
     await api('products?id=eq.'+id,{m:'PATCH',b:pbody(v)});
     if(v.link)await api('product_secrets',{m:'POST',prefer:'resolution=merge-duplicates',b:{product_id:id,link:v.link}});
     else await api('product_secrets?product_id=eq.'+id,{m:'DELETE'});
     await refresh();toast('Đã lưu sản phẩm')
    }
   }
-  else if(a==='sadd'){
-   var sn=$('#sn').value.trim(),su=$('#su').value.trim(),st=$('#st').value.trim();
-   if(!sn||!/^https:\/\/.+\{url\}/.test(su)){toast('Cần có tên và địa chỉ API https chứa {url}')}
-   else{await api('shorteners',{m:'POST',b:{name:sn,api_url:su,token:st}});await refresh();toast('Đã thêm dịch vụ rút gọn')}
-  }
-  else if(a==='sdel'){await api('shorteners?id=eq.'+id,{m:'DELETE'});await refresh();toast('Đã xoá dịch vụ')}
   else if(a==='del'){await api('products?id=eq.'+id,{m:'DELETE'});await refresh();toast('Đã xoá sản phẩm')}
   else if(a==='add'){
    var n=collect($('#addf')),er2=chk(n);
    if(er2){toast(er2)}
    else{
-    n.free_link=await mkFree(n);
     var r=await api('products',{m:'POST',prefer:'return=representation',b:pbody(n)});
     if(n.link)await api('product_secrets',{m:'POST',b:{product_id:r[0].id,link:n.link}});
     openSec.delete('add');await refresh();toast('Đã thêm sản phẩm')
    }
   }
- }catch(x){toast(vi(x.message))}
- busy=false;render();
+ }catch(x){toast(vi(x.message));skip=true}
+ busy=false;if(!skip)render();
 });
 document.addEventListener('change',async function(e){
  var f=e.target;if(f.type!=='file'||!f.files[0]||busy)return;
