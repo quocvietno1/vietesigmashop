@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Viet Esigma Shop</title>
+<title>Viete Sigma Shop</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap">
 <style>
 :root{--bg:#F1F4F9;--sf:#fff;--ink:#142033;--mu:#5B6B82;--ln:#DDE4EE;--ac:#2457D6;--acb:#fff;--ok:#1E8E5A;--er:#B42318;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -100,7 +100,7 @@ footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-fle
 <div class="wrap">
 <header>
   <div class="top">
-    <h1>Viet Esigma Shop<small>Tài liệu tải về ngay sau khi mua</small></h1>
+    <h1>Viete Sigma Shop<small>Tài liệu tải về ngay sau khi mua</small></h1>
     <div class="acc"><button id="accbtn" class="accbtn" data-a="menu" aria-haspopup="true" aria-expanded="false"></button><div id="accmenu" class="accmenu" hidden></div></div>
   </div>
   <nav id="nav" role="tablist"></nav>
@@ -213,18 +213,18 @@ function vAdmin(){
  sec('prods','Sản phẩm ('+adm.prods.length+')','<p class="note" style="margin-top:0">Sản phẩm có Link gốc sẽ vào mục Miễn phí, có giá bán sẽ vào mục Mất phí. Có cả hai thì vào cả hai mục.</p><ul>'+adm.prods.map(prow).join('')+'</ul>')+
  sec('add','Thêm sản phẩm mới','<div id="addf">'+fields()+'</div><div class="acts"><button class="btn" data-a="add">Thêm sản phẩm</button></div>')+
  sec('info','Thông tin quản trị (chân trang)','<label>Giới thiệu shop<textarea id="ia">'+esc(c.shop_about)+'</textarea></label><label>Số Zalo<input id="iz" inputmode="tel" value="'+esc(c.contact_zalo)+'"></label><label>Link Facebook<input id="ifb" value="'+esc(c.contact_facebook)+'" placeholder="https://"></label><label>Email liên hệ<input id="ie" value="'+esc(c.contact_email)+'"></label><label>Giờ hỗ trợ<input id="ih" value="'+esc(c.contact_hours)+'"></label><button class="btn" data-a="info">Lưu thông tin</button>')}
-function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
+function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử mua hàng']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
 function render(){
  var T=tabs();if(tab==='auth'?!!P:!T.some(t=>t[0]===tab))tab='shop';
  var ab=$('#accbtn'),am=$('#accmenu');
  ab.innerHTML=P?'<b>'+fmt(P.balance)+'</b><span>▾</span>':'<span>Tài khoản ▾</span>';
  ab.setAttribute('aria-expanded',String(menuOpen));am.hidden=!menuOpen;
- am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Lịch sử</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
+ am.innerHTML=P?'<div class="mt">'+esc(P.email)+'<b>Số dư: '+fmt(P.balance)+'</b></div><button class="mi" data-a="go" data-t="topup">Nạp tiền</button><button class="mi" data-a="go" data-t="hist">Lịch sử mua hàng</button><button class="mi out" data-a="logout">Đăng xuất</button>':'<button class="mi" data-a="authgo" data-m="login">Đăng nhập</button><button class="mi" data-a="authgo" data-m="signup">Đăng ký</button>';
  $('#nav').innerHTML=T.map(t=>'<button role="tab" data-a="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>').join('');
  $('#app').innerHTML={shop:vShop,auth:vAuth,topup:vTopup,hist:vHist,admin:vAdmin}[tab]();
  if(tab==='topup'&&pay&&window.QRCode){var qe=$('#qr');if(qe){qe.innerHTML='';new QRCode(qe,{text:pay.qrCode,width:220,height:220,correctLevel:QRCode.CorrectLevel.M})}}
  var z=cfg.contact_zalo,fb=cfg.contact_facebook,em=cfg.contact_email;
- $('#foot').innerHTML='<b>Viet Esigma Shop</b>'+(cfg.shop_about?'<p>'+esc(cfg.shop_about)+'</p>':'')+((z||isUrl(fb)||em)?'<div class="ct">'+(z?'<a href="https://zalo.me/'+esc(z.replace(/\D/g,''))+'" target="_blank" rel="noopener noreferrer">Zalo '+esc(z)+'</a>':'')+(isUrl(fb)?'<a href="'+esc(fb)+'" target="_blank" rel="noopener noreferrer">Facebook</a>':'')+(em?'<a href="mailto:'+esc(em)+'">'+esc(em)+'</a>':'')+'</div>':'')+(cfg.contact_hours?'<p>'+esc(cfg.contact_hours)+'</p>':'')+'<p>© '+new Date().getFullYear()+' Viet Esigma Shop</p>';
+ $('#foot').innerHTML='<b>Viete Sigma Shop</b>'+(cfg.shop_about?'<p>'+esc(cfg.shop_about)+'</p>':'')+((z||isUrl(fb)||em)?'<div class="ct">'+(z?'<a href="https://zalo.me/'+esc(z.replace(/\D/g,''))+'" target="_blank" rel="noopener noreferrer">Zalo '+esc(z)+'</a>':'')+(isUrl(fb)?'<a href="'+esc(fb)+'" target="_blank" rel="noopener noreferrer">Facebook</a>':'')+(em?'<a href="mailto:'+esc(em)+'">'+esc(em)+'</a>':'')+'</div>':'')+(cfg.contact_hours?'<p>'+esc(cfg.contact_hours)+'</p>':'')+'<p>© '+new Date().getFullYear()+' Viete Sigma Shop</p>';
 }
 var num=id=>Math.max(0,Math.floor(Number($(id).value)||0));
 function collect(c){var v={};c.querySelectorAll('[data-f]').forEach(i=>v[i.dataset.f]=i.value.trim());v.price=Math.max(0,Math.floor(Number(v.price)||0));v.stock=Math.max(0,Math.floor(Number(v.stock)||0));return v}
@@ -266,7 +266,7 @@ document.addEventListener('click',async function(e){
    else if(!p||p.stock<1){toast('Sản phẩm đã hết hàng')}
    else if(P.balance<p.price){armed=null;tab='topup';toast('Số dư chưa đủ, còn thiếu '+fmt(p.price-P.balance)+'. Hãy nạp thêm tiền.')}
    else if(armed!==id){armed=id;toast('Bấm lần nữa để xác nhận mua')}
-   else{armed=null;await api('rpc/buy_product',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Mua thành công. Link tải nằm ở mục Lịch sử.')}
+   else{armed=null;await api('rpc/buy_product',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Mua thành công. Link tải nằm ở mục Lịch sử mua hàng.')}
   }
   else if(a==='claim'){
    p=products.find(x=>x.id===id);
