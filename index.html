@@ -87,6 +87,7 @@ footer a{color:var(--ac);font-weight:600;text-decoration:none;display:inline-fle
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:40}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){#toast{transition:none}}
+.lnk{display:block;background:none;border:0;padding:0;min-height:36px;text-align:left;color:var(--ac);font:600 .75rem "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer}
 .qrw{display:flex;justify-content:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px}
 #qr img,#qr canvas{display:block}
 .kv{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--ln)}
@@ -154,7 +155,7 @@ async function upImg(f){
 
 async function refresh(){
  try{
-  products=await api('products?select=id,name,description,price,stock,image_url,is_free,sold&active=eq.true&order=id');
+  products=await api('products?select=id,name,description,price,stock,image_url,sold,free_link,free_count&active=eq.true&order=id');
   var s=await api('settings?select=key,value');cfg={};s.forEach(x=>cfg[x.key]=x.value);
   if(sess){
    var p=await api('profiles?select=email,nap_code,balance,is_admin&id=eq.'+sess.uid);P=p[0]||null;
@@ -174,12 +175,12 @@ async function refresh(){
 
 function vAuth(){var s=authMode==='signup';return '<h2>'+(s?'Đăng ký tài khoản':'Đăng nhập')+'</h2><label>Email<input id="em" type="email" autocomplete="email" autocapitalize="none"></label><label>Mật khẩu (từ 6 ký tự)<input id="pw" type="password" autocomplete="'+(s?'new-password':'current-password')+'"></label><div class="acts"><button class="btn" data-a="'+(s?'signup':'login')+'">'+(s?'Đăng ký':'Đăng nhập')+'</button><button class="alt" data-a="mode" data-m="'+(s?'login':'signup')+'">'+(s?'Đã có tài khoản? Đăng nhập':'Chưa có tài khoản? Đăng ký')+'</button></div>'}
 function card(p){
- var fr=p.is_free,out=!fr&&p.stock<1,a=armed===p.id;
- var btn=fr?'<button class="cart" data-a="claim" data-id="'+p.id+'">Nhận</button>':'<button class="cart'+(a?' armed':'')+'" data-a="buy" data-id="'+p.id+'" aria-label="'+(a?'Xác nhận mua':'Mua '+esc(p.name))+'"'+(out?' disabled':'')+'>'+(a?'Xác nhận':CART)+'</button>';
- return '<li class="card"><div class="im">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="" loading="lazy">':'📄')+'</div><div class="cb"><h3>'+esc(p.name)+'</h3><p>'+esc(p.description)+'</p><span class="meta">'+(fr?'Đã nhận ':'Đã bán ')+(p.sold||0)+' lượt'+(fr?'':' · '+(out?'Hết hàng':'Còn '+p.stock))+'</span><div class="foot"><span class="pr'+(fr?' fr':'')+'">'+(fr?'Miễn phí':fmt(p.price))+'</span>'+btn+'</div></div></li>'}
+ var free=kind==='free',out=!free&&p.stock<1,a=armed===p.id;
+ var btn=free?'<button class="cart" data-a="claim" data-id="'+p.id+'">Vượt link</button>':'<button class="cart'+(a?' armed':'')+'" data-a="buy" data-id="'+p.id+'" aria-label="'+(a?'Xác nhận mua':'Mua '+esc(p.name))+'"'+(out?' disabled':'')+'>'+(a?'Xác nhận':CART)+'</button>';
+ return '<li class="card"><div class="im">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="" loading="lazy">':'📄')+'</div><div class="cb"><h3>'+esc(p.name)+'</h3><p>'+esc(p.description)+'</p><span class="meta">'+(free?'Đã nhận '+(p.free_count||0)+' lượt':'Đã bán '+(p.sold||0)+' lượt · '+(out?'Hết hàng':'Còn '+p.stock))+'</span>'+(free&&p.price>0?'<button class="lnk" data-a="kind" data-k="paid">Mua '+fmt(p.price)+' để khỏi vượt link</button>':'')+(!free&&p.free_link?'<button class="lnk" data-a="kind" data-k="free">Có bản miễn phí (vượt link)</button>':'')+'<div class="foot"><span class="pr'+(free?' fr':'')+'">'+(free?'Miễn phí':fmt(p.price))+'</span>'+btn+'</div></div></li>'}
 function vShop(){
- var nf=products.filter(p=>p.is_free).length,f=products.filter(p=>!!p.is_free===(kind==='free'));
- return '<div class="seg"><button data-a="kind" data-k="paid" aria-pressed="'+(kind==='paid')+'">Mất phí ('+(products.length-nf)+')</button><button data-a="kind" data-k="free" aria-pressed="'+(kind==='free')+'">Miễn phí ('+nf+')</button></div>'+(f.length?'<ul class="grid">'+f.map(card).join('')+'</ul>':'<div class="empty">Chưa có sản phẩm ở mục này.</div>')}
+ var pa=products.filter(p=>p.price>0),fr=products.filter(p=>p.free_link),f=kind==='free'?fr:pa;
+ return '<div class="seg"><button data-a="kind" data-k="paid" aria-pressed="'+(kind==='paid')+'">Mất phí ('+pa.length+')</button><button data-a="kind" data-k="free" aria-pressed="'+(kind==='free')+'">Miễn phí ('+fr.length+')</button></div>'+(kind==='free'?'<p class="note" style="margin-top:0">Sản phẩm miễn phí cần vượt link để nhận. Không muốn vượt link thì mua ở mục Mất phí, bạn nhận link gốc ngay.</p>':'')+(f.length?'<ul class="grid">'+f.map(card).join('')+'</ul>':'<div class="empty">Chưa có sản phẩm ở mục này.</div>')}
 var payAmt=0,pay=null,payTimer=null;
 var BANKS={'970422':'MB Bank','970432':'VPBank','970436':'Vietcombank','970415':'VietinBank','970418':'BIDV','970405':'Agribank','970407':'Techcombank','970416':'ACB','970423':'TPBank','970403':'Sacombank','970448':'OCB','970437':'HDBank','970441':'VIB','970426':'MSB','970443':'SHB','970431':'Eximbank','970452':'KienlongBank','970440':'SeABank','970449':'LPBank'};
 function payBox(){return '<h2>Nạp tiền</h2><label>Số tiền muốn nạp (đ)<input id="pa" type="number" inputmode="numeric" min="10000" step="1000" placeholder="Từ 10.000đ" value="'+(payAmt||'')+'"></label><div class="acts">'+[20000,50000,100000,200000].map(n=>'<button class="alt" data-a="amt" data-n="'+n+'">'+fmt(n)+'</button>').join('')+'</div><div class="acts"><button class="btn" data-a="payos">Tạo mã nạp tiền</button><button class="alt" data-a="reload">Làm mới số dư</button></div><p class="note">Mã QR và thông tin chuyển khoản sẽ hiện ngay tại đây. Chuyển xong, số dư tự cộng sau vài giây.</p>'}
@@ -202,15 +203,14 @@ function vHist(){
  if(!P)return vAuth();
  if(!orders.length)return '<div class="empty">Bạn chưa mua hoặc nhận sản phẩm nào. Sản phẩm sẽ hiện ở đây kèm link tải.</div>';
  return '<ul>'+orders.map(x=>'<li class="row" style="display:block"><h3>'+esc(x.product_name)+'</h3><small>'+dt(x.created_at)+' · '+(x.price?fmt(x.price):'Miễn phí')+'</small><div class="acts"><a href="'+esc(safe(x.link))+'" target="_blank" rel="noopener noreferrer">Mở link tải</a><button class="alt" data-a="copy" data-id="'+x.id+'">Sao chép link</button></div></li>').join('')+'</ul>'}
-function fields(p){p=p||{};return '<div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Giới thiệu<input data-f="description" value="'+esc(p.description)+'"></label><label>Loại<select data-f="is_free"><option value="0"'+(p.is_free?'':' selected')+'>Mất phí (Mua)</option><option value="1"'+(p.is_free?' selected':'')+'>Miễn phí (Nhận)</option></select></label><label>Giá (đ)<input data-f="price" type="number" inputmode="numeric" value="'+(p.price||0)+'"></label><label>Số lượng<input data-f="stock" type="number" inputmode="numeric" value="'+(p.stock||0)+'"></label><label>Link tải<input data-f="link" value="'+esc(adm.links[p.id]||'')+'" placeholder="https://"></label></div><div class="imgbox"><img '+(p.image_url?'src="'+esc(safe(p.image_url))+'"':'hidden')+' alt=""><input type="hidden" data-f="image_url" value="'+esc(p.image_url||'')+'"><label class="up">Chọn ảnh<input type="file" accept="image/*" hidden></label></div>'}
+function fields(p){p=p||{};return '<div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Giới thiệu<input data-f="description" value="'+esc(p.description)+'"></label><label class="w">Link gốc (bản miễn phí, bắt vượt link)<input data-f="free_link" value="'+esc(p.free_link||'')+'" placeholder="https://"></label><label class="w">Link mua (khách mua nhận, không cần vượt link)<input data-f="link" value="'+esc(adm.links[p.id]||'')+'" placeholder="https://"></label><label>Giá bán (đ), 0 là không bán<input data-f="price" type="number" inputmode="numeric" value="'+(p.price||0)+'"></label><label>Số lượng bán<input data-f="stock" type="number" inputmode="numeric" value="'+(p.stock||0)+'"></label></div><div class="imgbox"><img '+(p.image_url?'src="'+esc(safe(p.image_url))+'"':'hidden')+' alt=""><input type="hidden" data-f="image_url" value="'+esc(p.image_url||'')+'"><label class="up">Chọn ảnh<input type="file" accept="image/*" hidden></label></div>'}
 function sec(k,t,body){return '<details class="sec" data-sec="'+k+'"'+(openSec.has(k)?' open':'')+'><summary>'+t+'</summary><div class="bd">'+body+'</div></details>'}
-function prow(p){return '<li class="ad" data-id="'+p.id+'"><details data-sec="p'+p.id+'"'+(openSec.has('p'+p.id)?' open':'')+'><summary class="ps"><span class="th">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="">':'📄')+'</span><span><b>'+esc(p.name)+'</b><small>'+(p.is_free?'Miễn phí':fmt(p.price)+' · còn '+p.stock)+' · '+(p.sold||0)+' lượt</small></span></summary>'+fields(p)+'<div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></details></li>'}
+function prow(p){return '<li class="ad" data-id="'+p.id+'"><details data-sec="p'+p.id+'"'+(openSec.has('p'+p.id)?' open':'')+'><summary class="ps"><span class="th">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="">':'📄')+'</span><span><b>'+esc(p.name)+'</b><small>'+(p.price>0?'Mất phí '+fmt(p.price)+' · còn '+p.stock+' · bán '+(p.sold||0):'')+(p.price>0&&p.free_link?' | ':'')+(p.free_link?'Miễn phí · nhận '+(p.free_count||0):'')+'</small></span></summary>'+fields(p)+'<div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></details></li>'}
 function vAdmin(){
  if(!P||!P.is_admin)return vShop();
- var pa=adm.prods.filter(p=>!p.is_free),fr=adm.prods.filter(p=>p.is_free),c=cfg;
+ var c=cfg;
  return sec('credit','Cộng tiền cho khách','<label>Email của khách<input id="cu" type="email" autocapitalize="none"></label><label>Số tiền (đ)<input id="ca" type="number" inputmode="numeric" min="1"></label><button class="btn" data-a="credit">Cộng tiền</button>')+
- sec('paid','Sản phẩm mất phí ('+pa.length+')','<ul>'+pa.map(prow).join('')+'</ul>')+
- sec('free','Sản phẩm miễn phí ('+fr.length+')','<ul>'+fr.map(prow).join('')+'</ul>')+
+ sec('prods','Sản phẩm ('+adm.prods.length+')','<p class="note" style="margin-top:0">Sản phẩm có Link gốc sẽ vào mục Miễn phí, có giá bán sẽ vào mục Mất phí. Có cả hai thì vào cả hai mục.</p><ul>'+adm.prods.map(prow).join('')+'</ul>')+
  sec('add','Thêm sản phẩm mới','<div id="addf">'+fields()+'</div><div class="acts"><button class="btn" data-a="add">Thêm sản phẩm</button></div>')+
  sec('info','Thông tin quản trị (chân trang)','<label>Giới thiệu shop<textarea id="ia">'+esc(c.shop_about)+'</textarea></label><label>Số Zalo<input id="iz" inputmode="tel" value="'+esc(c.contact_zalo)+'"></label><label>Link Facebook<input id="ifb" value="'+esc(c.contact_facebook)+'" placeholder="https://"></label><label>Email liên hệ<input id="ie" value="'+esc(c.contact_email)+'"></label><label>Giờ hỗ trợ<input id="ih" value="'+esc(c.contact_hours)+'"></label><button class="btn" data-a="info">Lưu thông tin</button>')}
 function tabs(){var t=[['shop','Cửa hàng']];if(P){t.push(['topup','Nạp tiền'],['hist','Lịch sử']);if(P.is_admin)t.push(['admin','Quản trị'])}return t}
@@ -227,8 +227,15 @@ function render(){
  $('#foot').innerHTML='<b>Viet Esigma Shop</b>'+(cfg.shop_about?'<p>'+esc(cfg.shop_about)+'</p>':'')+((z||isUrl(fb)||em)?'<div class="ct">'+(z?'<a href="https://zalo.me/'+esc(z.replace(/\D/g,''))+'" target="_blank" rel="noopener noreferrer">Zalo '+esc(z)+'</a>':'')+(isUrl(fb)?'<a href="'+esc(fb)+'" target="_blank" rel="noopener noreferrer">Facebook</a>':'')+(em?'<a href="mailto:'+esc(em)+'">'+esc(em)+'</a>':'')+'</div>':'')+(cfg.contact_hours?'<p>'+esc(cfg.contact_hours)+'</p>':'')+'<p>© '+new Date().getFullYear()+' Viet Esigma Shop</p>';
 }
 var num=id=>Math.max(0,Math.floor(Number($(id).value)||0));
-function collect(c){var v={};c.querySelectorAll('[data-f]').forEach(i=>v[i.dataset.f]=i.value.trim());v.is_free=v.is_free==='1';v.price=v.is_free?0:Math.max(0,Math.floor(Number(v.price)||0));v.stock=Math.max(0,Math.floor(Number(v.stock)||0));return v}
-function pbody(v){return{name:v.name,description:v.description,price:v.price,stock:v.stock,is_free:v.is_free,image_url:v.image_url||null}}
+function collect(c){var v={};c.querySelectorAll('[data-f]').forEach(i=>v[i.dataset.f]=i.value.trim());v.price=Math.max(0,Math.floor(Number(v.price)||0));v.stock=Math.max(0,Math.floor(Number(v.stock)||0));return v}
+function pbody(v){return{name:v.name,description:v.description,price:v.price,stock:v.stock,is_free:false,image_url:v.image_url||null,free_link:v.free_link||null}}
+function chk(v){
+ if(!v.name)return 'Cần có tên sản phẩm';
+ if(v.free_link&&!isUrl(v.free_link))return 'Link gốc phải bắt đầu bằng https://';
+ if(v.link&&!isUrl(v.link))return 'Link mua phải bắt đầu bằng https://';
+ if(v.price>0&&!v.link)return 'Sản phẩm có giá bán cần nhập Link mua';
+ if(!v.free_link&&!(v.price>0))return 'Cần nhập Link gốc (miễn phí) hoặc đặt giá bán';
+ return ''}
 
 document.addEventListener('click',async function(e){
  var b=e.target.closest('[data-a]');
@@ -262,8 +269,9 @@ document.addEventListener('click',async function(e){
    else{armed=null;await api('rpc/buy_product',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Mua thành công. Link tải nằm ở mục Lịch sử.')}
   }
   else if(a==='claim'){
-   if(!P){authMode='login';tab='auth';toast('Hãy đăng nhập để nhận tài liệu')}
-   else{await api('rpc/claim_free',{m:'POST',b:{p_id:id}});tab='hist';await refresh();toast('Đã nhận. Link tải nằm ở mục Lịch sử.')}
+   p=products.find(x=>x.id===id);
+   if(!p||!isUrl(p.free_link)){toast('Sản phẩm chưa có link miễn phí')}
+   else{window.open(p.free_link,'_blank','noopener');toast('Hãy vượt link để nhận tài liệu');try{await api('rpc/claim_free',{m:'POST',b:{p_id:id}});p.free_count=(p.free_count||0)+1}catch(x){}}
   }
   else if(a==='amt'){payAmt=Number(b.dataset.n)}
   else if(a==='payos'){
@@ -295,21 +303,22 @@ document.addEventListener('click',async function(e){
    await refresh();toast('Đã lưu')
   }
   else if(a==='save'){
-   var v=collect(b.closest('li'));
-   if(!v.name||!isUrl(v.link)){toast('Cần có tên và link bắt đầu bằng https://')}
+   var v=collect(b.closest('li')),er=chk(v);
+   if(er){toast(er)}
    else{
     await api('products?id=eq.'+id,{m:'PATCH',b:pbody(v)});
-    await api('product_secrets',{m:'POST',prefer:'resolution=merge-duplicates',b:{product_id:id,link:v.link}});
+    if(v.link)await api('product_secrets',{m:'POST',prefer:'resolution=merge-duplicates',b:{product_id:id,link:v.link}});
+    else await api('product_secrets?product_id=eq.'+id,{m:'DELETE'});
     await refresh();toast('Đã lưu sản phẩm')
    }
   }
   else if(a==='del'){await api('products?id=eq.'+id,{m:'DELETE'});await refresh();toast('Đã xoá sản phẩm')}
   else if(a==='add'){
-   var n=collect($('#addf'));
-   if(!n.name||!isUrl(n.link)){toast('Cần có tên và link bắt đầu bằng https://')}
+   var n=collect($('#addf')),er2=chk(n);
+   if(er2){toast(er2)}
    else{
     var r=await api('products',{m:'POST',prefer:'return=representation',b:pbody(n)});
-    await api('product_secrets',{m:'POST',b:{product_id:r[0].id,link:n.link}});
+    if(n.link)await api('product_secrets',{m:'POST',b:{product_id:r[0].id,link:n.link}});
     openSec.delete('add');await refresh();toast('Đã thêm sản phẩm')
    }
   }
