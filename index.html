@@ -120,7 +120,7 @@ var esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','
 var isUrl=u=>/^https?:\/\//i.test(u);
 var safe=u=>isUrl(u)?u:'#';
 var CART='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg>';
-function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2800)}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),Math.max(2800,m.length*50))}
 function vi(m){m=String(m);
  if(/invalid login/i.test(m))return 'Sai email hoặc mật khẩu';
  if(/already registered/i.test(m))return 'Email này đã có tài khoản, hãy bấm Đăng nhập';
@@ -205,7 +205,7 @@ function vHist(){
  if(!orders.length)return '<div class="empty">Bạn chưa mua hoặc nhận sản phẩm nào. Sản phẩm sẽ hiện ở đây kèm link tải.</div>';
  return '<ul>'+orders.map(x=>'<li class="row" style="display:block"><h3>'+esc(x.product_name)+'</h3><small>'+dt(x.created_at)+' · '+(x.price?fmt(x.price):'Miễn phí')+'</small><div class="acts"><a href="'+esc(safe(x.link))+'" target="_blank" rel="noopener noreferrer">Mở link tải</a><button class="alt" data-a="copy" data-id="'+x.id+'">Sao chép link</button></div></li>').join('')+'</ul>'}
 function sopts(sel){return shorts.map(x=>'<option value="'+x.id+'"'+(String(sel)===String(x.id)?' selected':'')+'>'+esc(x.name)+'</option>').join('')||'<option value="">(chưa có dịch vụ)</option>'}
-function fields(p){p=p||{};var s1=shorts[0]?shorts[0].id:'',s2=shorts[1]?shorts[1].id:s1;return '<div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Giới thiệu<input data-f="description" value="'+esc(p.description)+'"></label><label class="w">Link gốc (chưa rút gọn), khách mua nhận link này<input data-f="link" value="'+esc(adm.links[p.id]||'')+'" placeholder="https://"></label><label>Bản miễn phí (vượt link)<select data-f="layers">'+(p.free_link?'<option value="keep">Giữ link vượt hiện tại</option>':'')+'<option value="0"'+(p.free_link?'':' selected')+'>Không có bản miễn phí</option><option value="1">Rút gọn 1 lần</option><option value="2">Rút gọn 2 lần</option></select></label><label>Giá bán (đ), 0 là không bán<input data-f="price" type="number" inputmode="numeric" value="'+(p.price||0)+'"></label><label>Lần 1 dùng<select data-f="s1">'+sopts(s1)+'</select></label><label>Lần 2 dùng<select data-f="s2">'+sopts(s2)+'</select></label><label>Số lượng bán<input data-f="stock" type="number" inputmode="numeric" value="'+(p.stock||0)+'"></label><label class="w">Link vượt hiện tại (tự tạo khi bấm Lưu)<input data-f="free_link" readonly value="'+esc(p.free_link||'')+'"></label></div><div class="imgbox"><img '+(p.image_url?'src="'+esc(safe(p.image_url))+'"':'hidden')+' alt=""><input type="hidden" data-f="image_url" value="'+esc(p.image_url||'')+'"><label class="up">Chọn ảnh<input type="file" accept="image/*" hidden></label></div>'}
+function fields(p){p=p||{};var s1=shorts[0]?shorts[0].id:'',s2=shorts[1]?shorts[1].id:s1;return '<div class="g"><label class="w">Tên<input data-f="name" value="'+esc(p.name)+'"></label><label class="w">Giới thiệu<input data-f="description" value="'+esc(p.description)+'"></label><label class="w">Link gốc (chưa rút gọn), khách mua nhận link này<input data-f="link" value="'+esc(adm.links[p.id]||'')+'" placeholder="https://"></label><label>Bản miễn phí (vượt link)<select data-f="layers">'+'<option value="keep"'+(p.free_link?' selected':'')+'>Giữ / tự dán link vượt (ô dưới)</option><option value="0"'+(p.free_link?'':' selected')+'>Không có bản miễn phí</option><option value="1">Rút gọn 1 lần</option><option value="2">Rút gọn 2 lần</option></select></label><label>Giá bán (đ), 0 là không bán<input data-f="price" type="number" inputmode="numeric" value="'+(p.price||0)+'"></label><label>Lần 1 dùng<select data-f="s1">'+sopts(s1)+'</select></label><label>Lần 2 dùng<select data-f="s2">'+sopts(s2)+'</select></label><label>Số lượng bán<input data-f="stock" type="number" inputmode="numeric" value="'+(p.stock||0)+'"></label><label class="w">Link vượt (tự tạo khi chọn Rút gọn, hoặc tự dán vào đây)<input data-f="free_link" placeholder="https://" value="'+esc(p.free_link||'')+'"></label></div><div class="imgbox"><img '+(p.image_url?'src="'+esc(safe(p.image_url))+'"':'hidden')+' alt=""><input type="hidden" data-f="image_url" value="'+esc(p.image_url||'')+'"><label class="up">Chọn ảnh<input type="file" accept="image/*" hidden></label></div>'}
 function sec(k,t,body){return '<details class="sec" data-sec="'+k+'"'+(openSec.has(k)?' open':'')+'><summary>'+t+'</summary><div class="bd">'+body+'</div></details>'}
 function prow(p){return '<li class="ad" data-id="'+p.id+'"><details data-sec="p'+p.id+'"'+(openSec.has('p'+p.id)?' open':'')+'><summary class="ps"><span class="th">'+(p.image_url?'<img src="'+esc(safe(p.image_url))+'" alt="">':'📄')+'</span><span><b>'+esc(p.name)+'</b><small>'+(p.price>0?'Mất phí '+fmt(p.price)+' · còn '+p.stock+' · bán '+(p.sold||0):'')+(p.price>0&&p.free_link?' | ':'')+(p.free_link?'Miễn phí · nhận '+(p.free_count||0):'')+'</small></span></summary>'+fields(p)+'<div class="acts"><button data-a="save" data-id="'+p.id+'">Lưu</button><button class="ghost" data-a="del" data-id="'+p.id+'">Xoá</button></div></details></li>'}
 function vAdmin(){
@@ -237,8 +237,20 @@ function chk(v){
  if(!v.name)return 'Cần có tên sản phẩm';
  if(v.link&&!isUrl(v.link))return 'Link gốc phải bắt đầu bằng https://';
  if((v.price>0||L==='1'||L==='2')&&!v.link)return 'Cần nhập Link gốc (chưa rút gọn)';
+ if(L==='keep'&&v.free_link&&!isUrl(v.free_link))return 'Link vượt phải bắt đầu bằng https://';
  if(!has&&!(v.price>0))return 'Cần đặt giá bán hoặc chọn bản miễn phí vượt link';
  return ''}
+async function viaBrowser(ids,url){
+ var link=url;
+ for(var i=0;i<ids.length;i++){
+  var rows=await api('shorteners?select=name,api_url,token&id=eq.'+ids[i]),sv=rows[0];
+  if(!sv)throw new Error('Không tìm thấy dịch vụ rút gọn');
+  var r=await fetch(sv.api_url.replace('{token}',encodeURIComponent(sv.token)).replace('{url}',encodeURIComponent(link)));
+  var t=(await r.text()).trim(),out='';
+  try{var j=JSON.parse(t);out=j.shortenedUrl||j.short_url||j.html||j.url||j.link||''}catch(x){out=t}
+  if(!/^https?:\/\/\S+$/.test(out))throw new Error(sv.name+': '+t.slice(0,100));
+  link=out}
+ return link}
 async function mkFree(v){
  var L=v.layers||'0';
  if(L==='keep')return v.free_link||null;
@@ -246,10 +258,16 @@ async function mkFree(v){
  var ids=[Number(v.s1)];if(L==='2')ids.push(Number(v.s2||v.s1));
  if(!ids[0])throw new Error('Hãy thêm dịch vụ rút gọn link trước (mục Dịch vụ rút gọn link)');
  toast('Đang tạo link rút gọn…');await fresh();
- var r=await fetch(API+'/functions/v1/shorten',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'},body:JSON.stringify({url:v.link,providers:ids})});
- var d={};try{d=await r.json()}catch(x){}
- if(!r.ok||!d.link)throw new Error(d.error||'Không tạo được link rút gọn');
- return d.link}
+ var msg='';
+ try{
+  var r=await fetch(API+'/functions/v1/shorten',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'},body:JSON.stringify({url:v.link,providers:ids})});
+  var d={};try{d=await r.json()}catch(x){}
+  if(r.ok&&d.link)return d.link;
+  msg=d.error||'Không tạo được link rút gọn'
+ }catch(x){msg=x.message}
+ try{toast('Máy chủ bị chặn, đang thử từ trình duyệt…');return await viaBrowser(ids,v.link)}
+ catch(x){throw new Error(msg+' | '+(/Failed to fetch/i.test(x.message)?'Trình duyệt cũng không gọi được. Hãy tự tạo link rồi dán vào ô Link vượt, chọn "Giữ / tự dán link vượt".':x.message))}
+}
 
 document.addEventListener('click',async function(e){
  var b=e.target.closest('[data-a]');
